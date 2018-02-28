@@ -24,6 +24,7 @@ class Home extends React.Component{
   render() {
     const { classes, categories  } = this.props;
     const { value } = this.state;
+    console.log(this.props)
 
     return (
       <div className={classes.root}>
@@ -54,9 +55,9 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => ({
-  categories: state.items,
-  loading: state.loading,
-  error: state.error
+  categories: state.categoryReducer.items,
+  loading: state.categoryReducer.loading,
+  error: state.categoryReducer.error
 });
 
 const styledComponent = withStyles(styles)(Home);

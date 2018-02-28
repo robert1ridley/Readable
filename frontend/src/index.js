@@ -6,13 +6,13 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise';
 import { createLogger } from 'redux-logger';
-import categoryReducer from './Reducers/categoryReducer';
+import allReducers from './Reducers/index';
 import './index.css';
 import App from './App';
 
 const logger = createLogger();
 const store = createStore(
-  categoryReducer,
+  allReducers,
   applyMiddleware(thunk, promise, logger)
 );
 
