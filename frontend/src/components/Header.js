@@ -24,12 +24,12 @@ class Home extends React.Component{
           <Tabs value={value} onChange={this.handleChange}>
             {
               categories.length !== 0 &&
-              <Tab label="Home" key="0" />
+              <Tab label="Home" component={Link} to="/" />
             }
             {
               categories.length !== 0 &&
               categories.map((category, index) =>
-                <Tab label={category.name} key={index + 1} style={{color: 'white'}} />
+                <Tab label={category.name} key={index + 1} style={{color: 'white'}} component={Link} to={category.path} />
               )
             }
           </Tabs>
