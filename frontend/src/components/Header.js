@@ -1,20 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
+import { fetchCategories } from '../Actions/categoryActions';
 
 class Home extends React.Component{
   state = {
     value: 0,
+    categories: [],
+    posts: null
   };
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
 
+  componentDidMount() {
+    this.props.dispatch(fetchCategories());
+  }
+
   render() {
-    console.log(this.state.posts)
     const { classes, categories  } = this.props;
     const { value } = this.state;
 
@@ -46,4 +53,11 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(Home);
+const mapStateToProps = state => ({
+  categories: state.items,
+  loading: state.loading,
+  error: state.error
+});
+
+const styledComponent = withStyles(styles)(Home);
+export default connect(mapStateToProps)(styledComponent);

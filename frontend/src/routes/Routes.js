@@ -7,19 +7,10 @@ import Header from '../components/Header';
 
 class Routes extends React.Component {
   state = {
-    categories: [],
     posts: null
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3001/categories`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
-      .then(res => res.json())
-      .then(data => 
-        this.setState({
-          categories: data.categories
-        })
-      )
-
     fetch(`http://localhost:3001/posts`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
       .then(res => res.json())
       .then(data => 
@@ -30,14 +21,14 @@ class Routes extends React.Component {
   }
 
   render() {
-    const { categories, posts } = this.state;
+    const { posts } = this.state;
     return (
       <BrowserRouter>
         <div>
-          <Header categories={categories} />
+          <Header />
           <Switch>
-            <Route exact path="/" render={() => <Home posts={posts}/> }/>
-            <Route path="/:id" render={() => <SingleCategory posts={posts} />}/>
+            <Route exact path="/" render={() => <Home posts={posts}/>}/>
+            <Route path="/:id" render={() => <SingleCategory posts={posts}/>}/>
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
