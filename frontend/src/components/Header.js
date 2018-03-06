@@ -8,9 +8,7 @@ import { fetchCategories } from '../Actions/categoryActions';
 
 class Home extends React.Component{
   state = {
-    value: 0,
-    categories: [],
-    posts: null
+    value: 0
   };
 
   handleChange = (event, value) => {
@@ -24,7 +22,6 @@ class Home extends React.Component{
   render() {
     const { classes, categories  } = this.props;
     const { value } = this.state;
-    console.log(this.props)
 
     return (
       <div className={classes.root}>

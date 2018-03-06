@@ -10,15 +10,15 @@ class Routes extends React.Component {
     posts: null
   }
 
-  componentDidMount() {
-    fetch(`http://localhost:3001/posts`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
-      .then(res => res.json())
-      .then(data => 
-        this.setState({
-          posts: data
-        })
-      )
-  }
+  // componentDidMount() {
+  //   fetch(`http://localhost:3001/posts`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
+  //     .then(res => res.json())
+  //     .then(data => 
+  //       this.setState({
+  //         posts: data
+  //       })
+  //     )
+  // }
 
   render() {
     const { posts } = this.state;
