@@ -31,6 +31,21 @@ export function fetchPosts() {
   };
 }
 
+// export function fetchPostsByCategory(category) {
+//   return dispatch => {
+//     dispatch(startFetchPostsByCategory(category));
+//     return fetch(`${BASE_URL/category}/posts`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
+//       .then(handleErrors)
+//       .then(res => res.json())
+//       .then(data => {
+//         dispatch(fetchPostsSuccess(data));
+//         console.log(data)
+//         return data;
+//       })
+//       .catch(error => dispatch(fetchPostsFailure(error)));
+//   };
+// }
+
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText);
