@@ -8,6 +8,12 @@ class SingleCategory extends React.Component {
     this.props.dispatch(fetchPostsByCategory(this.props.match.params.id));
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id !== this.props.match.params.id && !this.props.loading){
+      this.props.dispatch(fetchPostsByCategory(nextProps.match.params.id));
+    }
+  }
+
   render(){
     let { posts } = this.props
     return (
