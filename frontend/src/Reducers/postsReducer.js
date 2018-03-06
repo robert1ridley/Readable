@@ -26,6 +26,14 @@ export default function postsReducer(state = initialState, action) {
         items: action.payload.posts
       };
 
+    case FETCH_POSTS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        items: []
+      };
+
     default:
       return state;
   }
