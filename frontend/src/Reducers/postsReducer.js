@@ -11,7 +11,6 @@ import {
 
 const initialState = {
   items: [],
-  sortTerm: 'NEWEST',
   loading: false,
   error: null
 };
@@ -29,7 +28,7 @@ export default function postsReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        items: action.payload.posts
+        items: action.payload.posts.sort(sortBy('timestamp')).slice().reverse()
       };
 
     case FETCH_POSTS_FAILURE:
@@ -43,28 +42,24 @@ export default function postsReducer(state = initialState, action) {
     case SORT_POSTS_BY_NEWEST:
       return {
         ...state,
-        sortTerm: 'NEWEST',
         items: state.items.sort(sortBy('timestamp')).slice().reverse()
       };
 
     case SORT_POSTS_BY_OLDEST:
       return {
         ...state,
-        sortTerm: 'OLDEST',
         items: state.items.sort(sortBy('timestamp')).slice()
       };
 
     case SORT_POSTS_BY_MOST_LIKES:
       return {
         ...state,
-        sortTerm: 'MOST_LIKED',
         items: state.items.sort(sortBy('voteScore')).slice().reverse()
       };
 
     case SORT_POSTS_BY_FEWEST_LIKES:
       return {
         ...state,
-        sortTerm: 'LEAST_LIKED',
         items: state.items.sort(sortBy('voteScore')).slice()
       }
 

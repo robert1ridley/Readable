@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PostsList from '../components/PostsList';
 import { fetchPosts } from '../Actions/postsActions';
+import SortButtons from '../components/SortButtons';
 
 class Home extends React.Component{
 
@@ -14,6 +15,7 @@ class Home extends React.Component{
 
     return (
       <div>
+        <SortButtons />
         {
           posts &&
           <PostsList posts={posts} />

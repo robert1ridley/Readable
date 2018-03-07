@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PostsList from '../components/PostsList';
 import { fetchPostsByCategory } from '../Actions/postsActions';
+import SortButtons from '../components/SortButtons';
 
 class SingleCategory extends React.Component {
   componentDidMount() {
@@ -18,6 +19,7 @@ class SingleCategory extends React.Component {
     let { posts } = this.props
     return (
       <div>
+        <SortButtons />
         {
           posts &&
           <PostsList posts={posts} />

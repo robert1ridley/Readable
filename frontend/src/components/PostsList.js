@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
-import moment from 'moment';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import FaceIcon from 'material-ui-icons/Face';
@@ -8,15 +7,27 @@ import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavi
 import ThumbUp from 'material-ui-icons/ThumbUp';
 import ThumbDown from 'material-ui-icons/ThumbDown';
 import DateRangeIcon from 'material-ui-icons/DateRange';
-import LocationOnIcon from 'material-ui-icons/LocationOn';
 import InsertCommentIcon from 'material-ui-icons/InsertComment';
+import Paper from 'material-ui/Paper';
 
 const styles = theme => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-    marginTop: 30,
+    marginTop: 10,
+    paddingBottom: 30
   },
+  listItem: {
+    marginLeft: 20,
+    marginRight: 20,
+    maxWidth: 700,
+    cursor: 'pointer'
+  },
+  innerList: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3,
+  }),
 });
 
 function PostsList(props) {
@@ -26,7 +37,8 @@ function PostsList(props) {
       <List>
         {
           posts.map(post => 
-            <div key={post.id} style={{marginBottom: 30, cursor: 'pointer'}}>
+            <div key={post.id} className={classes.listItem}>
+              <Paper className={classes.innerList} elevation={4}>
               <ListItem>
                 <Avatar>
                   <FaceIcon />
@@ -51,6 +63,7 @@ function PostsList(props) {
                   icon={<InsertCommentIcon />}
                 />
               </BottomNavigation>
+              </Paper>
             </div>
           )
         }
