@@ -38,9 +38,18 @@ function PostsList(props) {
                 showLabels
                 style={{maxWidth: 400}}
               >
-                <BottomNavigationAction label={post.voteScore} icon={post.voteScore < 0 ? <ThumbDown /> : <ThumbUp />} />
-                <BottomNavigationAction label={`${new Date(post.timestamp).getDay()}/${new Date(post.timestamp).getMonth()}/${new Date(post.timestamp).getFullYear()}`} icon={<DateRangeIcon />} />
-                <BottomNavigationAction label={`${post.commentCount} comments`} icon={<InsertCommentIcon />} />
+                <BottomNavigationAction 
+                  label={`${post.voteScore} likes`} 
+                  icon={post.voteScore < 0 ? <ThumbDown /> : <ThumbUp />} 
+                />
+                <BottomNavigationAction 
+                  label={`${new Date(post.timestamp).getDay()}/${new Date(post.timestamp).getMonth()}/${new Date(post.timestamp).getFullYear()}`}
+                  icon={<DateRangeIcon />}
+                />
+                <BottomNavigationAction 
+                  label={`${post.commentCount} comments`} 
+                  icon={<InsertCommentIcon />}
+                />
               </BottomNavigation>
             </div>
           )

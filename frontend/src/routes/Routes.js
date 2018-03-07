@@ -16,7 +16,7 @@ class Routes extends React.Component {
           <SortButtons />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/:id" component={SingleCategory} />
+            <Route path="/:category" component={SingleCategory} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>

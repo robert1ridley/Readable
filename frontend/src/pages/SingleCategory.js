@@ -5,12 +5,12 @@ import { fetchPostsByCategory } from '../Actions/postsActions';
 
 class SingleCategory extends React.Component {
   componentDidMount() {
-    this.props.dispatch(fetchPostsByCategory(this.props.match.params.id));
+    this.props.dispatch(fetchPostsByCategory(this.props.match.params.category));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id !== this.props.match.params.id && !this.props.loading){
-      this.props.dispatch(fetchPostsByCategory(nextProps.match.params.id));
+    if (nextProps.match.params.category !== this.props.match.params.category && !this.props.loading){
+      this.props.dispatch(fetchPostsByCategory(nextProps.match.params.category));
     }
   }
 
