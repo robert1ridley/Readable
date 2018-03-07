@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
+import moment from 'moment';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import FaceIcon from 'material-ui-icons/Face';
@@ -19,12 +20,20 @@ function PostsList(props) {
       <List>
         {
           posts.map(post => 
-            <ListItem key={post.id}>
-              <Avatar>
-                <FaceIcon />
-              </Avatar>
-              <ListItemText primary={post.title} secondary={post.body} />
-            </ListItem>
+            <div key={post.id}>
+              <ListItem>
+                <Avatar>
+                  <FaceIcon />
+                </Avatar>
+                <ListItemText primary={post.title} secondary={post.body} />
+              </ListItem>
+              <p style={{marginLeft:70, fontSize: '80%', fontWeight: 500}}>Likes: 
+                <span style={{fontWeight: 100}}> {post.voteScore} </span>
+                Date:
+                <span style={{fontWeight: 100}}> {`${new Date(post.timestamp).getDay()}/${new Date(post.timestamp).getMonth()}/${new Date(post.timestamp).getFullYear()}`}</span>
+                {console.log(new Date(post.timestamp))}
+              </p>
+            </div>
           )
         }
       </List>

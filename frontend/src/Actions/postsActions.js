@@ -1,6 +1,10 @@
 export const START_FETCH_POSTS = 'START_FETCH_POSTS';
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS';
 export const FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE';
+export const SORT_POSTS_BY_NEWEST = 'SORT_POSTS_BY_NEWEST';
+export const SORT_POSTS_BY_OLDEST = 'SORT_POSTS_BY_OLDEST';
+export const SORT_POSTS_BY_MOST_LIKES = 'SORT_POSTS_BY_MOST_LIKES';
+export const SORT_POSTS_BY_FEWEST_LIKES = 'SORT_POSTS_BY_FEWEST_LIKES';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchPosts = () => ({
@@ -15,6 +19,22 @@ export const fetchPostsSuccess = posts => ({
 export const fetchPostsFailure = error => ({
   type: FETCH_POSTS_FAILURE,
   payload: { error }
+});
+
+export const sortPostsByNewest = () => ({
+  type: SORT_POSTS_BY_NEWEST
+});
+
+export const sortPostsByOldest = () => ({
+  type: SORT_POSTS_BY_OLDEST
+});
+
+export const sortPostsByMostLikes = () => ({
+  type: SORT_POSTS_BY_MOST_LIKES
+});
+
+export const sortPostsByFewestLikes = () => ({
+  type: SORT_POSTS_BY_FEWEST_LIKES
 });
 
 export function fetchPosts() {
