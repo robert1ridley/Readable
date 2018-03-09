@@ -6,9 +6,9 @@ This repository includes the code for both the backend API Server and the React 
 
 ## Start Developing
 
-To get started developing right away:
+After cloning the repository, to get started developing:
 
-* Install and start the API server
+* Install and then start the API server
     - `cd api-server`
     - `npm install`
     - `node server`
