@@ -24,6 +24,39 @@ const defaultData = {
     voteScore: -5,
     deleted: false,
     commentCount: 0
+  },
+  "7ni6ok3ym7mf1p33lnez": {
+    id: '7ni6ok3ym7mf1p33lnez',
+    timestamp: 1498479700000,
+    title: 'What is React!',
+    body: 'I think it must be some cool new tech that I have never heard of before.',
+    author: 'Ringo',
+    category: 'react',
+    voteScore: 3,
+    deleted: false,
+    commentCount: 0
+  },
+  "8ni6ok3ym7mf1p33lnez": {
+    id: '8ni6ok3ym7mf1p33lnez',
+    timestamp: 1368479000000,
+    title: 'Learn Udacity as it is cool!',
+    body: 'Udacity is the place where people go to study some stuff, like coding, yeah.',
+    author: 'thingone',
+    category: 'udacity',
+    voteScore: 1,
+    deleted: false,
+    commentCount: 0
+  },
+  "9ni6ok3ym7mf1p33lnez": {
+    id: '9ni6ok3ym7mf1p33lnez',
+    timestamp: 1268400000000,
+    title: 'This is a redux comment',
+    body: 'Redux is hard. Try to get your head around it. Maybe you can figure it out.',
+    author: 'Mike',
+    category: 'redux',
+    voteScore: 8,
+    deleted: false,
+    commentCount: 0
   }
 }
 
