@@ -9,6 +9,7 @@ import ThumbDown from 'material-ui-icons/ThumbDown';
 import DateRangeIcon from 'material-ui-icons/DateRange';
 import InsertCommentIcon from 'material-ui-icons/InsertComment';
 import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
   root: {
@@ -33,42 +34,47 @@ const styles = theme => ({
 function PostsList(props) {
   const { classes, posts } = props;
   return (
-    <div className={classes.root}>
-      <List>
-        {
-          posts.map(post => 
-            <div key={post.id} className={classes.listItem}>
-              <Paper className={classes.innerList} elevation={4}>
-              <ListItem>
-                <Avatar>
-                  <FaceIcon />
-                </Avatar>
-                <ListItemText primary={post.title} secondary={post.body} />
-              </ListItem>
-              <BottomNavigation
-                value='blue'
-                showLabels
-                style={{maxWidth: 400}}
-              >
-                <BottomNavigationAction 
-                  label={`${post.voteScore} likes`} 
-                  icon={post.voteScore < 0 ? <ThumbDown /> : <ThumbUp />} 
-                />
-                <BottomNavigationAction 
-                  label={`${new Date(post.timestamp).getDay()}/${new Date(post.timestamp).getMonth()}/${new Date(post.timestamp).getFullYear()}`}
-                  icon={<DateRangeIcon />}
-                />
-                <BottomNavigationAction 
-                  label={`${post.commentCount} comments`} 
-                  icon={<InsertCommentIcon />}
-                />
-              </BottomNavigation>
-              </Paper>
-            </div>
-          )
-        }
-      </List>
-    </div>
+    <Grid container spacing={24} style={{flexGrow: 1}}>
+      <Grid item md={3} xs={1} />
+      <Grid item md={6} xs={10}>
+        <div className={classes.root}>
+          <List>
+            {
+              posts.map(post => 
+                <div key={post.id} className={classes.listItem}>
+                  <Paper className={classes.innerList} elevation={4}>
+                    <ListItem>
+                      <Avatar>
+                        <FaceIcon />
+                      </Avatar>
+                      <ListItemText primary={post.title} secondary={post.body} />
+                    </ListItem>
+                    <BottomNavigation
+                      value='blue'
+                      showLabels
+                      style={{maxWidth: 400}}
+                    >
+                      <BottomNavigationAction 
+                        label={`${post.voteScore} likes`} 
+                        icon={post.voteScore < 0 ? <ThumbDown /> : <ThumbUp />} 
+                      />
+                      <BottomNavigationAction 
+                        label={`${new Date(post.timestamp).getDay()}/${new Date(post.timestamp).getMonth()}/${new Date(post.timestamp).getFullYear()}`}
+                        icon={<DateRangeIcon />}
+                      />
+                      <BottomNavigationAction 
+                        label={`${post.commentCount} comments`} 
+                        icon={<InsertCommentIcon />}
+                      />
+                    </BottomNavigation>
+                  </Paper>
+                </div>
+              )
+            }
+          </List>
+        </div>
+       </Grid>
+     </Grid>
   );
 }
 
