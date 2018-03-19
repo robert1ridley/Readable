@@ -1,5 +1,8 @@
 import sortBy from 'sort-by'
 import {
+  START_FETCH_SINGLE_POST,
+  FETCH_SINGLE_POST_SUCCESS,
+  FETCH_SINGLE_POST_FAILURE,
   START_FETCH_POSTS,
   FETCH_POSTS_SUCCESS,
   FETCH_POSTS_FAILURE,
@@ -11,12 +14,35 @@ import {
 
 const initialState = {
   items: [],
+  singleItem: {},
   loading: false,
   error: null
 };
 
 export default function postsReducer(state = initialState, action) {
   switch(action.type) {
+    case START_FETCH_SINGLE_POST:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
+    case FETCH_SINGLE_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        singleItem: action.payload.post
+      };
+
+    case FETCH_SINGLE_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        singleItem: {}
+      };
+
     case START_FETCH_POSTS:
       return {
         ...state,
