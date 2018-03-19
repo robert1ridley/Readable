@@ -17,7 +17,7 @@ class Home extends React.Component{
 
   componentDidMount() {
     this.props.dispatch(fetchCategories());
-  }
+  };
 
   render() {
     const { classes, categories  } = this.props;
@@ -34,7 +34,7 @@ class Home extends React.Component{
             {
               categories.length !== 0 &&
               categories.map((category, index) =>
-                <Tab label={category.name} key={index + 1} style={{color: 'white'}} component={Link} to={category.path} />
+                <Tab label={category.name} key={index + 1} style={{color: 'white'}} component={Link} to={`/${category.path}`} />
               )
             }
           </Tabs>
