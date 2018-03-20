@@ -68,6 +68,10 @@ function PostsList(props) {
                           label={`${post.commentCount} comments`} 
                           icon={<InsertCommentIcon />}
                         />
+                        <BottomNavigationAction 
+                          label={post.author}
+                          icon={<FaceIcon />}
+                        />
                       </BottomNavigation>
                     </Paper>
                   </div>

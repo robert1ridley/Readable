@@ -7,3 +7,11 @@ body {
 a {
   text-decoration: none;
 }
+
+.vote {
+  font-size: 14px;
+ }
+
+ div.MuiCardActions-root-175 {
+   height: auto;
+ }
