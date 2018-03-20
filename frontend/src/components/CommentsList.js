@@ -6,7 +6,7 @@ import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
-import FolderIcon from 'material-ui-icons/Folder';
+import FaceIcon from 'material-ui-icons/Face';
 import List, {
   ListItem,
   ListItemAvatar,
@@ -49,7 +49,7 @@ class CommentsList extends React.Component {
       <Grid container spacing={24} style={{flexGrow: 1}}>
         <Grid item md={3} xs={1} />
         <Grid item md={6} xs={10}>
-          <Typography variant="sub-title" className={classes.title}>
+          <Typography variant="subheading" className={classes.title}>
             Comments
           </Typography>
           <div className={classes.background}>
@@ -58,11 +58,11 @@ class CommentsList extends React.Component {
                 <ListItem>
                   <ListItemAvatar>
                     <Avatar>
-                      <FolderIcon />
+                      <FaceIcon />
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    primary="Single-line item"
+                    primary="This is a comment"
                     secondary={secondary ? 'Secondary text' : null}
                   />
                   <ListItemSecondaryAction>
