@@ -9,8 +9,6 @@ import Avatar from 'material-ui/Avatar';
 import FaceIcon from 'material-ui-icons/Face';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import ExpandLessIcon from 'material-ui-icons/ExpandLess';
-import DateRangeIcon from 'material-ui-icons/DateRange';
-import CommentIcon from 'material-ui-icons/Comment';
 import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Chip from 'material-ui/Chip';
@@ -30,8 +28,8 @@ const styles = {
 };
 
 class OnePostItem extends React.Component {
-  componentDidUpdate() {
-    this.props.dispatch(fetchSinglePost(this.props.params));
+  componentDidMount() {
+    this.props.dispatch(fetchSinglePost(this.props.postId));
   }
 
   upVote() {
@@ -54,7 +52,7 @@ class OnePostItem extends React.Component {
     return (
       <div>
         {
-          this.props.post!== {} && this.props.params!== '' &&
+          this.props.post!== {} && this.props.postId!== '' &&
           <div>
             <Grid container spacing={24} style={{flexGrow: 1}}>
               <Grid item md={3} xs={1} />
@@ -97,7 +95,7 @@ class OnePostItem extends React.Component {
                         onClick={this.downVote}
                       />
                       <Chip
-                        avatar={<Avatar><CommentIcon /></Avatar>}
+                        avatar={<Avatar><ModeEditIcon /></Avatar>}
                         label="Edit Post"
                         style={styles.chip}
                         onClick={this.editPost}
