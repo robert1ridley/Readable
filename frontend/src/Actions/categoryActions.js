@@ -17,10 +17,14 @@ export const fetchCategoriesFailure = error => ({
   payload: { error }
 });
 
+const headers = {
+  Authorization: Math.random().toString(36).substr(-8)
+}
+
 export function fetchCategories() {
   return dispatch => {
     dispatch(startFetchCategories());
-    return fetch(`${BASE_URL}/categories`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
+    return fetch(`${BASE_URL}/categories`, { headers: { 'Authorization': headers.Authorization }})
       .then(handleErrors)
       .then(res => res.json())
       .then(data => {

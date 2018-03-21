@@ -17,10 +17,14 @@ export const fetchCommentsFailure = error => ({
   payload: { error }
 });
 
+const headers = {
+  Authorization: Math.random().toString(36).substr(-8)
+}
+
 export function fetchComments(id) {
   return dispatch => {
     dispatch(startFetchComments());
-    return fetch(`${BASE_URL}/posts/${id}/comments`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
+    return fetch(`${BASE_URL}/posts/${id}/comments`, { headers: { 'Authorization': headers.Authorization }})
       .then(handleErrors)
       .then(res => res.json())
       .then(data => {
