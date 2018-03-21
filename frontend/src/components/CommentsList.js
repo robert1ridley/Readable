@@ -47,7 +47,7 @@ class CommentsList extends React.Component {
         <Grid item md={3} xs={1} />
         <Grid item md={6} xs={10}>
           <Typography variant="subheading" className={classes.title}>
-            Comments
+            Comments • {this.props.comments.length}
           </Typography>
           <div className={classes.background}>
             <List dense={dense}>
