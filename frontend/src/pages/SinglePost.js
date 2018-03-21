@@ -8,7 +8,7 @@ class SinglePost extends React.Component {
     return (
       <div>
         <OnePostItem postId={this.props.match.params.post} />
-        <CommentsList />
+        <CommentsList postId={this.props.match.params.post} />
       </div>
     )
   }

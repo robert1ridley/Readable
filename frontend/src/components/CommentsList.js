@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
+import { connect } from 'react-redux';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import ModeEditIcon from 'material-ui-icons/ModeEdit';
@@ -13,6 +14,7 @@ import List, {
   ListItemSecondaryAction,
   ListItemText,
 } from 'material-ui/List';
+import { fetchComments } from '../Actions/commentsActions';
 
 const styles = theme => ({
   root: {
@@ -27,24 +29,19 @@ const styles = theme => ({
   },
 });
 
-function generate(element) {
-  return [0, 1, 2].map(value =>
-    React.cloneElement(element, {
-      key: value,
-    }),
-  );
-}
-
 class CommentsList extends React.Component {
   state = {
-    dense: false,
-    secondary: true,
+    dense: true
   };
+
+  componentDidMount() {
+    this.props.dispatch(fetchComments(this.props.postId));
+  }
 
   render () {
     const { classes } = this.props;
     const { dense, secondary } = this.state;
-
+    
     return (
       <Grid container spacing={24} style={{flexGrow: 1}}>
         <Grid item md={3} xs={1} />
@@ -54,34 +51,43 @@ class CommentsList extends React.Component {
           </Typography>
           <div className={classes.background}>
             <List dense={dense}>
-              {generate(
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FaceIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="This is a comment"
-                    secondary={secondary ? 'Secondary text' : null}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton aria-label="Edit">
-                      <ModeEditIcon />
-                    </IconButton>
-                    <IconButton aria-label="Delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>,
-              )}
+              {
+                this.props.comments &&
+                this.props.comments.map(comment => 
+                  <ListItem key={comment.id}>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <FaceIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={comment.body}
+                      secondary={comment.author}
+                    />
+                    <ListItemSecondaryAction>
+                      <IconButton aria-label="Edit">
+                        <ModeEditIcon />
+                      </IconButton>
+                      <IconButton aria-label="Delete">
+                        <DeleteIcon />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                )
+              }
             </List>
           </div>
         </Grid>
       </Grid>
-
     )
   }
 }
 
-export default withStyles(styles)(CommentsList);
+const mapStateToProps = state => ({
+  comments: state.commentsReducer.items,
+  loading: state.commentsReducer.loading,
+  error: state.commentsReducer.error
+});
+
+const wrappedComponent = withStyles(styles)(CommentsList);
+export default connect(mapStateToProps)(wrappedComponent);
