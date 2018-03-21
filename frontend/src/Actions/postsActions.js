@@ -54,10 +54,14 @@ export const sortPostsByFewestLikes = () => ({
   type: SORT_POSTS_BY_FEWEST_LIKES
 });
 
+const headers = {
+  Authorization: Math.random().toString(36).substr(-8)
+}
+
 export function fetchPosts() {
   return dispatch => {
     dispatch(startFetchPosts());
-    return fetch(`${BASE_URL}/posts`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
+    return fetch(`${BASE_URL}/posts`, { headers: { 'Authorization': headers.Authorization }})
       .then(handleErrors)
       .then(res => res.json())
       .then(data => {
@@ -71,7 +75,7 @@ export function fetchPosts() {
 export function fetchPostsByCategory(category) {
   return dispatch => {
     dispatch(startFetchPosts());
-    return fetch(`${BASE_URL}/${category}/posts`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
+    return fetch(`${BASE_URL}/${category}/posts`, { headers: { 'Authorization': headers.Authorization }})
       .then(handleErrors)
       .then(res => res.json())
       .then(data => {
@@ -85,7 +89,7 @@ export function fetchPostsByCategory(category) {
 export function fetchSinglePost(id) {
   return dispatch => {
     dispatch(startFetchSinglePost());
-    return fetch(`${BASE_URL}/posts/${id}`, { headers: { 'Authorization': Math.random().toString(36).substr(-8) }})
+    return fetch(`${BASE_URL}/posts/${id}`, { headers: { 'Authorization': headers.Authorization }})
       .then(handleErrors)
       .then(res => res.json())
       .then(data => {
