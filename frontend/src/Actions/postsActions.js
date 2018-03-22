@@ -8,6 +8,9 @@ export const SORT_POSTS_BY_NEWEST = 'SORT_POSTS_BY_NEWEST';
 export const SORT_POSTS_BY_OLDEST = 'SORT_POSTS_BY_OLDEST';
 export const SORT_POSTS_BY_MOST_LIKES = 'SORT_POSTS_BY_MOST_LIKES';
 export const SORT_POSTS_BY_FEWEST_LIKES = 'SORT_POSTS_BY_FEWEST_LIKES';
+export const START_UPDATE_VOTES = 'START_UPDATE_VOTES';
+export const UPDATE_VOTES_SUCCESS = 'UPDATE_VOTES_SUCCESS';
+export const UPDATE_VOTES_FAILURE = 'UPDATE_VOTES_FAILURE';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchSinglePost = () => ({
@@ -54,6 +57,20 @@ export const sortPostsByFewestLikes = () => ({
   type: SORT_POSTS_BY_FEWEST_LIKES
 });
 
+export const startUpdateVotes = () => ({
+  type: START_UPDATE_VOTES
+});
+
+export const updateVotesSuccess = vote => ({
+  type: UPDATE_VOTES_SUCCESS,
+  payload: { vote }
+});
+
+export const updateVotesFailure = error => ({
+  type: UPDATE_VOTES_FAILURE,
+  payload: { error }
+})
+
 const headers = {
   Authorization: Math.random().toString(36).substr(-8)
 }
@@ -98,6 +115,33 @@ export function fetchSinglePost(id) {
       })
       .catch(error => dispatch(fetchSinglePostFailure(error)));
   };
+}
+
+export function updateVotes(vote, postId) {
+  const payload = {
+    option: vote
+  }
+  return dispatch => {
+      dispatch(startUpdateVotes());
+      return fetch(`${BASE_URL}/posts/${postId}`, { 
+        headers: { 
+          'Authorization': headers.Authorization,
+          'content-type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(payload)
+      })
+        .then(response => {
+          response.json()
+        })
+        .then(data => {
+            console.log(data);
+            dispatch(updateVotesSuccess(vote));
+            return data
+          }
+        )
+        .catch(error => dispatch(updateVotesFailure(error)))
+  }
 }
 
 function handleErrors(response) {

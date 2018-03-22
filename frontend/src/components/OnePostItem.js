@@ -12,6 +12,7 @@ import ExpandLessIcon from 'material-ui-icons/ExpandLess';
 import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Chip from 'material-ui/Chip';
+import { updateVotes } from '../Actions/postsActions';
 
 const styles = {
   card: {
@@ -32,8 +33,8 @@ class OnePostItem extends React.Component {
     this.props.dispatch(fetchSinglePost(this.props.postId));
   }
 
-  upVote() {
-    alert('You upvoted.');
+  voteOnPost(vote) {
+    this.props.dispatch(updateVotes(vote, this.props.postId));
   }
 
   downVote() {
@@ -49,6 +50,7 @@ class OnePostItem extends React.Component {
   }
 
   render() {
+    console.log(this.props.post)
     return (
       <div>
         {
@@ -86,13 +88,13 @@ class OnePostItem extends React.Component {
                         avatar={<Avatar><ExpandLessIcon /></Avatar>}
                         label="Upvote"
                         style={styles.chip}
-                        onClick={this.upVote}
+                        onClick={() => this.voteOnPost("upVote")}
                       />
                       <Chip
                         avatar={<Avatar><ExpandMoreIcon /></Avatar>}
                         label="Downvote"
                         style={styles.chip}
-                        onClick={this.downVote}
+                        onClick={() => this.voteOnPost("downVote")}
                       />
                       <Chip
                         avatar={<Avatar><ModeEditIcon /></Avatar>}

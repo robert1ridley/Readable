@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "dotenv": "^5.0.1",
+    "immutability-helper": "^2.6.6",
     "material-ui": "^1.0.0-beta.35",
     "material-ui-icons": "^1.0.0-beta.35",
     "moment": "^2.21.0",

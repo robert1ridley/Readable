@@ -9,8 +9,12 @@ import {
   SORT_POSTS_BY_NEWEST,
   SORT_POSTS_BY_OLDEST,
   SORT_POSTS_BY_MOST_LIKES,
-  SORT_POSTS_BY_FEWEST_LIKES
+  SORT_POSTS_BY_FEWEST_LIKES,
+  START_UPDATE_VOTES,
+  UPDATE_VOTES_SUCCESS,
+  UPDATE_VOTES_FAILURE
 } from '../Actions/postsActions';
+import update from 'immutability-helper';
 
 const initialState = {
   items: [],
@@ -87,6 +91,32 @@ export default function postsReducer(state = initialState, action) {
       return {
         ...state,
         items: state.items.sort(sortBy('voteScore')).slice()
+      };
+
+    case START_UPDATE_VOTES:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
+    case UPDATE_VOTES_SUCCESS:
+      return update(
+        state, 
+        {
+        singleItem: {
+          loading: {$set: false},
+          error: {$set: null},
+          voteScore: action.payload.vote === 'upVote' ? {$set: state.singleItem.voteScore + 1} : {$set: state.singleItem.voteScore - 1}
+        },
+        // items: 
+      })
+    
+    case UPDATE_VOTES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
       }
 
     default:

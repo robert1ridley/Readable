@@ -40,7 +40,7 @@ class CommentsList extends React.Component {
 
   render () {
     const { classes } = this.props;
-    const { dense, secondary } = this.state;
+    const { dense } = this.state;
     
     return (
       <Grid container spacing={24} style={{flexGrow: 1}}>
@@ -85,8 +85,8 @@ class CommentsList extends React.Component {
 
 const mapStateToProps = state => ({
   comments: state.commentsReducer.items,
-  loading: state.commentsReducer.loading,
-  error: state.commentsReducer.error
+  commentsLoading: state.commentsReducer.loading,
+  commentsError: state.commentsReducer.error
 });
 
 const wrappedComponent = withStyles(styles)(CommentsList);
