@@ -11,6 +11,9 @@ export const SORT_POSTS_BY_FEWEST_LIKES = 'SORT_POSTS_BY_FEWEST_LIKES';
 export const START_UPDATE_VOTES = 'START_UPDATE_VOTES';
 export const UPDATE_VOTES_SUCCESS = 'UPDATE_VOTES_SUCCESS';
 export const UPDATE_VOTES_FAILURE = 'UPDATE_VOTES_FAILURE';
+export const START_DELETE_POST = 'START_DELETE_POST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchSinglePost = () => ({
@@ -69,11 +72,25 @@ export const updateVotesSuccess = vote => ({
 export const updateVotesFailure = error => ({
   type: UPDATE_VOTES_FAILURE,
   payload: { error }
-})
+});
+
+export const startDeletePost = () => ({
+  type: START_DELETE_POST
+});
+
+export const deletePostSuccess = postId => ({
+  type: DELETE_POST_SUCCESS,
+  payload: { postId }
+});
+
+export const deletePostFailure = error => ({
+  type: DELETE_POST_FAILURE,
+  payload: { error }
+});
 
 const headers = {
   Authorization: Math.random().toString(36).substr(-8)
-}
+};
 
 export function fetchPosts() {
   return dispatch => {
@@ -122,27 +139,51 @@ export function updateVotes(vote, postId) {
     option: vote
   }
   return dispatch => {
-      dispatch(startUpdateVotes());
-      return fetch(`${BASE_URL}/posts/${postId}`, { 
-        headers: { 
-          'Authorization': headers.Authorization,
-          'content-type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify(payload)
+    dispatch(startUpdateVotes());
+    return fetch(`${BASE_URL}/posts/${postId}`, { 
+      headers: { 
+        'Authorization': headers.Authorization,
+        'content-type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        response.json()
       })
-        .then(response => {
-          response.json()
-        })
-        .then(data => {
-            console.log(data);
-            dispatch(updateVotesSuccess(vote));
-            return data
-          }
-        )
-        .catch(error => dispatch(updateVotesFailure(error)))
+      .then(data => {
+        console.log(data);
+        dispatch(updateVotesSuccess(vote));
+        return data
+        }
+      )
+      .catch(error => dispatch(updateVotesFailure(error)))
   }
 }
+
+export function deletePost(postId) {
+  return dispatch => {
+    dispatch(startDeletePost());
+    return fetch(`${BASE_URL}/posts/${postId}`, { 
+      headers: { 
+        'Authorization': headers.Authorization,
+        'content-type': 'application/json'
+      },
+      method: "DELETE"
+    })
+      .then(response => {
+        response.json()
+      })
+      .then(data => {
+        console.log(data);
+        dispatch(deletePostSuccess(postId));
+        return data
+        }
+      )
+      .catch(error => dispatch(deletePostFailure(error)))
+  }
+}
+
 
 function handleErrors(response) {
   if (!response.ok) {

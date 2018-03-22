@@ -12,7 +12,10 @@ import {
   SORT_POSTS_BY_FEWEST_LIKES,
   START_UPDATE_VOTES,
   UPDATE_VOTES_SUCCESS,
-  UPDATE_VOTES_FAILURE
+  UPDATE_VOTES_FAILURE,
+  START_DELETE_POST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILURE
 } from '../Actions/postsActions';
 import update from 'immutability-helper';
 
@@ -102,7 +105,7 @@ export default function postsReducer(state = initialState, action) {
 
     case UPDATE_VOTES_SUCCESS:
       return update(
-        state, 
+        state,
         {
         singleItem: {
           loading: {$set: false},
@@ -113,6 +116,31 @@ export default function postsReducer(state = initialState, action) {
       })
     
     case UPDATE_VOTES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
+      }
+
+    case START_DELETE_POST:
+      return {
+        ...state,
+        loading: true
+      }
+    
+    case DELETE_POST_SUCCESS:
+      return update(
+        state, 
+        {
+        singleItem: {
+          loading: {$set: false},
+          error: {$set: null},
+          deleted: {$set: true}
+        },
+        // items: 
+      })
+
+    case DELETE_POST_FAILURE:
       return {
         ...state,
         loading: false,

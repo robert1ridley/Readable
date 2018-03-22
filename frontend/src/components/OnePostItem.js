@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchSinglePost } from '../Actions/postsActions';
 import Card, { CardHeader, CardActions, CardContent } from 'material-ui/Card';
@@ -12,7 +13,7 @@ import ExpandLessIcon from 'material-ui-icons/ExpandLess';
 import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Chip from 'material-ui/Chip';
-import { updateVotes } from '../Actions/postsActions';
+import { updateVotes, deletePost } from '../Actions/postsActions';
 
 const styles = {
   card: {
@@ -37,22 +38,21 @@ class OnePostItem extends React.Component {
     this.props.dispatch(updateVotes(vote, this.props.postId));
   }
 
-  downVote() {
-    alert('You downvoted.');
-  }
-
   editPost() {
     alert('so you want to edit the post ...');
   }
 
-  deletePost() {
-    alert('delete this post');
+  deletePost(postId) {
+    this.props.dispatch(deletePost(postId));
   }
 
   render() {
-    console.log(this.props.post)
     return (
       <div>
+        {
+          this.props.post.deleted &&
+          <Redirect to="/"/>
+        }
         {
           this.props.post!== {} && this.props.postId!== '' &&
           <div>
@@ -106,7 +106,7 @@ class OnePostItem extends React.Component {
                         avatar={<Avatar><DeleteIcon /></Avatar>}
                         label="Delete Post"
                         style={styles.chip}
-                        onClick={this.deletePost}
+                        onClick={() => this.deletePost(this.props.postId)}
                       />
                     </div>
                   </CardActions>
