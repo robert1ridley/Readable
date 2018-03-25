@@ -17,7 +17,6 @@ import {
   DELETE_POST_SUCCESS,
   DELETE_POST_FAILURE
 } from '../Actions/postsActions';
-import update from 'immutability-helper';
 
 const initialState = {
   items: [],
@@ -104,16 +103,20 @@ export default function postsReducer(state = initialState, action) {
       };
 
     case UPDATE_VOTES_SUCCESS:
-      return update(
-        state,
-        {
+      const voteCount = action.payload.vote === 'upVote' ? 1 : - 1
+      return {
+        ...state,
+        loading: false,
+        error: null,
         singleItem: {
-          loading: {$set: false},
-          error: {$set: null},
-          voteScore: action.payload.vote === 'upVote' ? {$set: state.singleItem.voteScore + 1} : {$set: state.singleItem.voteScore - 1}
+          ...state.singleItem,
+          voteScore: state.singleItem.voteScore + voteCount
         },
-        // items: 
-      })
+        ...state.items,
+        items: state.items.filter((item) =>
+          item.voteScore = item.id === state.singleItem.id ? item.voteScore + voteCount : item.voteScore
+        )
+      }
     
     case UPDATE_VOTES_FAILURE:
       return {
@@ -129,16 +132,15 @@ export default function postsReducer(state = initialState, action) {
       }
     
     case DELETE_POST_SUCCESS:
-      return update(
-        state, 
-        {
-        singleItem: {
-          loading: {$set: false},
-          error: {$set: null},
-          deleted: {$set: true}
-        },
-        // items: 
-      })
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        ...state.items,
+        items: state.items.filter((item) => 
+          item.deleted = item.id === action.payload.postId ? item.deleted = true : false),
+        singleItem: {}
+      }
 
     case DELETE_POST_FAILURE:
       return {

@@ -42,6 +42,7 @@ function PostsList(props) {
           <List>
             {
               posts.map(post => 
+                post.deleted !== true &&
                 <Link to={`/${post.category}/${post.id}`} key={post.id}>
                   <div key={post.id} className={classes.listItem}>
                     <Paper className={classes.innerList} elevation={4}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchSinglePost } from '../Actions/postsActions';
 import Card, { CardHeader, CardActions, CardContent } from 'material-ui/Card';
@@ -42,19 +42,21 @@ class OnePostItem extends React.Component {
     alert('so you want to edit the post ...');
   }
 
-  deletePost(postId) {
-    this.props.dispatch(deletePost(postId));
+  deletePost = (postId) => {
+    this.props.dispatch(deletePost(postId))
+    .then(this.props.history.push("/"))
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         {
-          this.props.post.deleted &&
+          this.props.post.deleted && this.props.loading!==false &&
           <Redirect to="/"/>
         }
         {
-          this.props.post!== {} && this.props.postId!== '' &&
+          (this.props.post !== {} || this.props.postId === '') &&
           <div>
             <Grid container spacing={24} style={{flexGrow: 1}}>
               <Grid item md={3} xs={1} />
@@ -126,4 +128,5 @@ const mapStateToProps = state => ({
   error: state.postsReducer.error
 });
 
-export default connect(mapStateToProps)(OnePostItem);
+const wrappedComponent = withRouter(OnePostItem)
+export default connect(mapStateToProps)(wrappedComponent);

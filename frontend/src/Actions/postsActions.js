@@ -175,7 +175,6 @@ export function deletePost(postId) {
         response.json()
       })
       .then(data => {
-        console.log(data);
         dispatch(deletePostSuccess(postId));
         return data
         }
