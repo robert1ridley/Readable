@@ -137,9 +137,8 @@ export default function postsReducer(state = initialState, action) {
         loading: false,
         error: null,
         singleItem: {},
-        ...state.items,
-        items: state.items.filter((item) => 
-          item.deleted = item.id === action.payload.postId ? true : false),
+        items: [...state.items.map((item) => ({...item,
+          deleted: item.id === action.payload.postId ? true : false}))]
       }
 
     case DELETE_POST_FAILURE:
