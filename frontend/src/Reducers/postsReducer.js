@@ -112,10 +112,8 @@ export default function postsReducer(state = initialState, action) {
           ...state.singleItem,
           voteScore: state.singleItem.voteScore + voteCount
         },
-        ...state.items,
-        items: state.items.filter((item) =>
-          item.voteScore = item.id === state.singleItem.id ? item.voteScore + voteCount : item.voteScore
-        )
+        items: [...state.items.map((item) => ({...item,
+          voteScore: item.id === state.singleItem.id ? item.voteScore + voteCount : item.voteScore}))]
       }
     
     case UPDATE_VOTES_FAILURE:
