@@ -11,6 +11,7 @@ import DateRangeIcon from 'material-ui-icons/DateRange';
 import InsertCommentIcon from 'material-ui-icons/InsertComment';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import AddPost from './AddPost';
 
 const styles = theme => ({
   root: {
@@ -40,6 +41,7 @@ function PostsList(props) {
       <Grid item md={6} xs={10}>
         <div className={classes.root}>
           <List>
+            <AddPost />
             {
               posts.map(post => 
                 !post.deleted &&

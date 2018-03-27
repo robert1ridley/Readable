@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PostsList from '../components/PostsList';
 import { fetchPostsByCategory } from '../Actions/postsActions';
 import SortButtons from '../components/SortButtons';
+import AddPost from '../components/AddPost';
 
 class SingleCategory extends React.Component {
   componentDidMount() {
