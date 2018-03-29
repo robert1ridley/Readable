@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
@@ -11,6 +12,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import { MenuItem } from 'material-ui/Menu';
 import Select from 'material-ui/Select';
+import { addPost } from '../Actions/postsActions';
 
 const styles = theme => ({
   container: {
@@ -37,12 +39,14 @@ function guid() {
 
 class FormPopUp extends React.Component {
   state = {
-    author: '',
+    id: '',
+    timestamp: '',
     title: '',
     body: '',
-    category: 'Choose a category',
-    timestamp: '',
-    id: ''
+    author: '',
+    voteScore: 1,
+    commentCount: 0,
+    category: 'react'
   };
 
   handleChange = name => event => {
@@ -51,20 +55,25 @@ class FormPopUp extends React.Component {
     });
   };
 
-  handleSubmit(event) {
-    console.log("evoked")
-    event.preventDefault();
+  updateStateOnSubmit = () => {
     this.setState({
       timestamp: Date.now(),
       id: guid()
     })
   }
 
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    await this.updateStateOnSubmit()
+    this.props.dispatch(addPost(this.state))
+    .then(this.props.closePopUp)
+    .then(this.props.history.push("/"))
+  }
+
   render() {
-    console.log(this.state)
     const { classes, categories } = this.props;
     return (
-      <form onSubmit={(event) => this.handleSubmit(event)}>
+      <form>
         <Dialog
           open={this.props.open}
           onClose={this.props.closePopUp}
@@ -135,7 +144,7 @@ class FormPopUp extends React.Component {
             <Button onClick={this.props.closePopUp} color="primary">
               Cancel
             </Button>
-            <Button color="primary" type="submit">
+            <Button color="primary" type="submit" onClick={(event) => this.handleSubmit(event)}>
               Create
             </Button>
           </DialogActions>
@@ -150,4 +159,5 @@ const mapStateToProps = state => ({
 });
 
 const wrappedComponent = withStyles(styles)(FormPopUp);
-export default connect(mapStateToProps)(wrappedComponent);
+const redirectWrappedComponent = withRouter(wrappedComponent);
+export default connect(mapStateToProps)(redirectWrappedComponent);

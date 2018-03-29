@@ -15,7 +15,10 @@ import {
   UPDATE_VOTES_FAILURE,
   START_DELETE_POST,
   DELETE_POST_SUCCESS,
-  DELETE_POST_FAILURE
+  DELETE_POST_FAILURE,
+  START_ADD_POST,
+  ADD_POST_SUCCESS,
+  ADD_POST_FAILURE
 } from '../Actions/postsActions';
 
 const initialState = {
@@ -140,6 +143,28 @@ export default function postsReducer(state = initialState, action) {
       }
 
     case DELETE_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
+      }
+
+      case START_ADD_POST:
+      return {
+        ...state,
+        loading: true
+      }
+    
+    case ADD_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        singleItem: {},
+        items: [...state.items, action.payload.post]
+      }
+
+    case ADD_POST_FAILURE:
       return {
         ...state,
         loading: false,
