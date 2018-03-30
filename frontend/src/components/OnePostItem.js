@@ -14,6 +14,7 @@ import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Chip from 'material-ui/Chip';
 import { updateVotes, deletePost } from '../Actions/postsActions';
+import UpdatePostPopUp from './UpdatePostPopUp';
 
 const styles = {
   card: {
@@ -30,16 +31,28 @@ const styles = {
 };
 
 class OnePostItem extends React.Component {
+  state = {
+    open: false
+  }
+
+  openPopup = () => {
+    this.setState({
+      open: true
+    })
+  }
+
+  closePopUp = () => {
+    this.setState({
+      open: false
+    })
+  }
+
   componentDidMount() {
     this.props.dispatch(fetchSinglePost(this.props.postId));
   }
 
   voteOnPost(vote) {
     this.props.dispatch(updateVotes(vote, this.props.postId));
-  }
-
-  editPost() {
-    alert('so you want to edit the post ...');
   }
 
   deletePost = (postId) => {
@@ -102,7 +115,7 @@ class OnePostItem extends React.Component {
                         avatar={<Avatar><ModeEditIcon /></Avatar>}
                         label="Edit Post"
                         style={styles.chip}
-                        onClick={this.editPost}
+                        onClick={this.openPopup}
                       />
                       <Chip
                         avatar={<Avatar><DeleteIcon /></Avatar>}
@@ -117,6 +130,10 @@ class OnePostItem extends React.Component {
             </Grid>
           </div>  
         }
+        <UpdatePostPopUp
+          open={this.state.open}
+          closePopUp={this.closePopUp}
+        />
       </div>
     )
   }

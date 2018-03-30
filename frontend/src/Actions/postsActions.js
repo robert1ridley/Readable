@@ -17,6 +17,9 @@ export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 export const START_ADD_POST = 'START_ADD_POST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const START_EDIT_POST = 'START_EDIT_POST';
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
+export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchSinglePost = () => ({
@@ -102,6 +105,21 @@ export const addPostSuccess = post => ({
 
 export const addPostFailure = error => ({
   type: ADD_POST_FAILURE,
+  payload: { error }
+});
+
+//NEW
+export const startEditPost = () => ({
+  type: START_EDIT_POST
+});
+
+export const editPostSuccess = post => ({
+  type: EDIT_POST_SUCCESS,
+  payload: { post }
+});
+
+export const editPostFailure = error => ({
+  type: EDIT_POST_FAILURE,
   payload: { error }
 });
 
@@ -200,7 +218,6 @@ export function deletePost(postId) {
   }
 }
 
-//WORKING ON
 export function addPost(post) {
   return dispatch => {
     dispatch(startAddPost());
@@ -221,6 +238,29 @@ export function addPost(post) {
         }
       )
       .catch(error => dispatch(addPostFailure(error)))
+  }
+}
+
+export function editPost(post) {
+  return dispatch => {
+    dispatch(startEditPost());
+    return fetch(`${BASE_URL}/posts`, { 
+      headers: { 
+        'Authorization': headers.Authorization,
+        'content-type': 'application/json'
+      },
+      method: "PUT",
+      body: JSON.stringify(post)
+    })
+      .then(response => {
+        response.json()
+      })
+      .then(data => {
+        dispatch(editPostSuccess(post));
+        return data
+        }
+      )
+      .catch(error => dispatch(editPostFailure(error)))
   }
 }
 

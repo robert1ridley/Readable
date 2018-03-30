@@ -18,7 +18,10 @@ import {
   DELETE_POST_FAILURE,
   START_ADD_POST,
   ADD_POST_SUCCESS,
-  ADD_POST_FAILURE
+  ADD_POST_FAILURE,
+  START_EDIT_POST,
+  EDIT_POST_SUCCESS,
+  EDIT_POST_FAILURE
 } from '../Actions/postsActions';
 
 const initialState = {
@@ -149,7 +152,7 @@ export default function postsReducer(state = initialState, action) {
         error: action.payload.error
       }
 
-      case START_ADD_POST:
+    case START_ADD_POST:
       return {
         ...state,
         loading: true
@@ -165,6 +168,30 @@ export default function postsReducer(state = initialState, action) {
       }
 
     case ADD_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
+      }
+
+    case START_EDIT_POST:
+      return {
+        ...state,
+        loading: true
+      }
+    
+    case EDIT_POST_SUCCESS:
+    const match = state.items.find( item => item.id === action.payload.post.id );
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        singleItem: {},
+        items: [...state.items.map((item) => ({...item,          
+          item: item.id === action.payload.post.id ? action.payload.post : item}))]
+      }
+
+    case EDIT_POST_FAILURE:
       return {
         ...state,
         loading: false,
