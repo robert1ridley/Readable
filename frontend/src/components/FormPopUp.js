@@ -93,6 +93,7 @@ class FormPopUp extends React.Component {
               type="name"
               onChange={this.handleChange('author')}
               fullWidth
+              required
             />
             <TextField
               autoFocus
@@ -103,6 +104,7 @@ class FormPopUp extends React.Component {
               type="text"
               onChange={this.handleChange('title')}
               fullWidth
+              required
             />
             <TextField
               autoFocus
@@ -115,6 +117,7 @@ class FormPopUp extends React.Component {
               type="text"
               onChange={this.handleChange('body')}
               fullWidth
+              required
             />
             <TextField
               id="select-category-native"
@@ -132,6 +135,7 @@ class FormPopUp extends React.Component {
               }}
               helperText="Please select the category of your post"
               margin="normal"
+              required
             >
               {categories.map(option => (
               <option key={option.name} value={option.name}>
