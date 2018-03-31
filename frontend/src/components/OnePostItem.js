@@ -42,9 +42,15 @@ class OnePostItem extends React.Component {
   }
 
   closePopUp = () => {
-    this.setState({
-      open: false
-    })
+    if(this.mounted){
+      this.setState({
+        open: false
+      })
+    }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   componentDidMount() {
@@ -65,11 +71,11 @@ class OnePostItem extends React.Component {
     return (
       <div>
         {
-          this.props.post.deleted && this.props.loading!==false &&
+          this.props.post.deleted && !this.props.post.loading &&
           <Redirect to="/"/>
         }
         {
-          (this.props.post !== {} || this.props.postId === '') &&
+          (this.props.post !== {} || this.props.postId === '' || this.props.loading !== true) &&
           <div>
             <Grid container spacing={24} style={{flexGrow: 1}}>
               <Grid item md={3} xs={1} />

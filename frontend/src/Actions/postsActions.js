@@ -20,6 +20,7 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const START_EDIT_POST = 'START_EDIT_POST';
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
 export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
+export const EDIT_POST_FORM = 'EDIT_POST_FORM';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchSinglePost = () => ({
@@ -108,7 +109,6 @@ export const addPostFailure = error => ({
   payload: { error }
 });
 
-//NEW
 export const startEditPost = () => ({
   type: START_EDIT_POST
 });
@@ -122,6 +122,11 @@ export const editPostFailure = error => ({
   type: EDIT_POST_FAILURE,
   payload: { error }
 });
+
+export const editPostForm = (field, text) => ({
+  type: EDIT_POST_FORM,
+  payload: { field, text }
+})
 
 const headers = {
   Authorization: Math.random().toString(36).substr(-8)
@@ -219,6 +224,9 @@ export function deletePost(postId) {
 }
 
 export function addPost(post) {
+  const payload = {
+    option: post
+  }
   return dispatch => {
     dispatch(startAddPost());
     return fetch(`${BASE_URL}/posts`, { 
@@ -227,7 +235,7 @@ export function addPost(post) {
         'content-type': 'application/json'
       },
       method: "POST",
-      body: JSON.stringify(post)
+      body: JSON.stringify(payload)
     })
       .then(response => {
         response.json()
@@ -242,9 +250,12 @@ export function addPost(post) {
 }
 
 export function editPost(post) {
+  const payload = {
+    option: post
+  }
   return dispatch => {
     dispatch(startEditPost());
-    return fetch(`${BASE_URL}/posts`, { 
+    return fetch(`${BASE_URL}/posts/${post.id}`, { 
       headers: { 
         'Authorization': headers.Authorization,
         'content-type': 'application/json'
@@ -253,17 +264,16 @@ export function editPost(post) {
       body: JSON.stringify(post)
     })
       .then(response => {
-        response.json()
+        console.log(response.json())
       })
       .then(data => {
-        dispatch(editPostSuccess(post));
+        dispatch(editPostSuccess(payload));
         return data
         }
       )
       .catch(error => dispatch(editPostFailure(error)))
   }
 }
-
 
 function handleErrors(response) {
   if (!response.ok) {
