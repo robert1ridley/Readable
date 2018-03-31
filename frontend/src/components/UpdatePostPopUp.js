@@ -35,7 +35,6 @@ class UpdatePostPopUp extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     this.props.dispatch(editPost(this.props.post))
-    .then(this.props.closePopUp)
     .then(this.props.history.push("/"))
   }
 

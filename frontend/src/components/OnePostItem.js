@@ -42,15 +42,9 @@ class OnePostItem extends React.Component {
   }
 
   closePopUp = () => {
-    if(this.mounted){
-      this.setState({
-        open: false
-      })
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
+    this.setState({
+      open: false
+    })
   }
 
   componentDidMount() {
