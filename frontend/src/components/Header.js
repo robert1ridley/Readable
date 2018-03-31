@@ -6,7 +6,7 @@ import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import { fetchCategories } from '../Actions/categoryActions';
 
-class Home extends React.Component{
+class Header extends React.Component{
   state = {
     value: 0
   };
@@ -22,7 +22,6 @@ class Home extends React.Component{
   render() {
     const { classes, categories  } = this.props;
     const { value } = this.state;
-
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -57,5 +56,5 @@ const mapStateToProps = state => ({
   error: state.categoryReducer.error
 });
 
-const styledComponent = withStyles(styles)(Home);
+const styledComponent = withStyles(styles)(Header);
 export default connect(mapStateToProps)(styledComponent);
