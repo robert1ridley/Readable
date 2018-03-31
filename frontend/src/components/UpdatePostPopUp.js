@@ -29,12 +29,6 @@ const styles = theme => ({
 
 class UpdatePostPopUp extends React.Component {
   handleChange = name => event => {
-    // this.setState({
-    //   ...this.state.post,
-    //   post: {
-    //     [name]: event.target.value
-    //   }
-    // });
     this.props.dispatch(editPostForm(name, event.target.value))
   };
 
@@ -46,7 +40,7 @@ class UpdatePostPopUp extends React.Component {
   }
 
   render() {
-    const { classes, categories, post } = this.props;
+    const { post } = this.props;
     return (
       <form>
         <Dialog
@@ -106,5 +100,6 @@ const mapStateToProps = state => ({
   error: state.postsReducer.error
 });
 
-const wrappedComponent = withRouter(UpdatePostPopUp);
-export default connect(mapStateToProps)(wrappedComponent);
+const wrappedComponent = withStyles(styles)(UpdatePostPopUp);
+const wrappedComponentWithRouter = withRouter(wrappedComponent);
+export default connect(mapStateToProps)(wrappedComponentWithRouter);

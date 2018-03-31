@@ -182,7 +182,6 @@ export default function postsReducer(state = initialState, action) {
       }
     
     case EDIT_POST_SUCCESS:
-    const match = state.items.find( item => item.id === action.payload.post.id );
       return {
         ...state,
         loading: false,
@@ -200,7 +199,6 @@ export default function postsReducer(state = initialState, action) {
       }
 
     case EDIT_POST_FORM:
-      console.log("evoked")
       return {
         ...state,
         singleItem: {

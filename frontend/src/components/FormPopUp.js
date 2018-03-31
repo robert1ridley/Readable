@@ -10,8 +10,6 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-import { MenuItem } from 'material-ui/Menu';
-import Select from 'material-ui/Select';
 import { addPost } from '../Actions/postsActions';
 
 const styles = theme => ({
@@ -71,12 +69,13 @@ class FormPopUp extends React.Component {
   }
 
   render() {
-    const { classes, categories } = this.props;
+    const { classes, categories, open, closePopUp } = this.props;
+    const { category } = this.state;
     return (
       <form>
         <Dialog
-          open={this.props.open}
-          onClose={this.props.closePopUp}
+          open={open}
+          onClose={closePopUp}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Add New Post</DialogTitle>
@@ -125,7 +124,7 @@ class FormPopUp extends React.Component {
               label="Category"
               name="category"
               className={classes.textField}
-              value={this.state.category}
+              value={category}
               onChange={this.handleChange('category')}
               SelectProps={{
                 native: true,
@@ -145,7 +144,7 @@ class FormPopUp extends React.Component {
             </TextField>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.props.closePopUp} color="primary">
+            <Button onClick={closePopUp} color="primary">
               Cancel
             </Button>
             <Button color="primary" type="submit" onClick={(event) => this.handleSubmit(event)}>

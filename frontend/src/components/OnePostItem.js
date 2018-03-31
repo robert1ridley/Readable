@@ -67,15 +67,16 @@ class OnePostItem extends React.Component {
   }
 
   render() {
-    console.log(this.props)
+    const { post, loading, postId } = this.props;
+    const { open } = this.state;
     return (
       <div>
         {
-          this.props.post.deleted && !this.props.post.loading &&
+          post.deleted && !post.loading &&
           <Redirect to="/"/>
         }
         {
-          (this.props.post !== {} || this.props.postId === '' || this.props.loading !== true) &&
+          (post !== {} || postId === '' || loading !== true) &&
           <div>
             <Grid container spacing={24} style={{flexGrow: 1}}>
               <Grid item md={3} xs={1} />
@@ -87,22 +88,22 @@ class OnePostItem extends React.Component {
                         <FaceIcon />
                       </Avatar>
                     }
-                    title={this.props.post.title}
-                    subheader={this.props.post.author}
+                    title={post.title}
+                    subheader={post.author}
                   />
                   <CardContent>
                     <Typography component="p">
-                      {this.props.post.body}
+                      {post.body}
                     </Typography>
                     <Typography component="p" style={styles.date}>
-                      {`${new Date(this.props.post.timestamp).getDay()}/${new Date(this.props.post.timestamp).getMonth()}/${new Date(this.props.post.timestamp).getFullYear()}`}
+                      {`${new Date(post.timestamp).getDay()}/${new Date(post.timestamp).getMonth()}/${new Date(post.timestamp).getFullYear()}`}
                     </Typography>
                   </CardContent>
                   <CardActions>
                     <div style={{display: 'block'}}>
                       <Chip
                         avatar={<Avatar><Favorite /></Avatar>}
-                        label={this.props.post.voteScore}
+                        label={post.voteScore}
                         style={styles.chip}
                       />
                       <Chip
@@ -127,7 +128,7 @@ class OnePostItem extends React.Component {
                         avatar={<Avatar><DeleteIcon /></Avatar>}
                         label="Delete Post"
                         style={styles.chip}
-                        onClick={() => this.deletePost(this.props.postId)}
+                        onClick={() => this.deletePost(postId)}
                       />
                     </div>
                   </CardActions>
@@ -137,7 +138,7 @@ class OnePostItem extends React.Component {
           </div>  
         }
         <UpdatePostPopUp
-          open={this.state.open}
+          open={open}
           closePopUp={this.closePopUp}
         />
       </div>

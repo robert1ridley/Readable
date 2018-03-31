@@ -39,7 +39,7 @@ class CommentsList extends React.Component {
   }
 
   render () {
-    const { classes } = this.props;
+    const { classes, comments } = this.props;
     const { dense } = this.state;
     
     return (
@@ -47,13 +47,13 @@ class CommentsList extends React.Component {
         <Grid item md={3} xs={1} />
         <Grid item md={6} xs={10}>
           <Typography variant="subheading" className={classes.title}>
-            Comments • {this.props.comments.length}
+            Comments • {comments.length}
           </Typography>
           <div className={classes.background}>
             <List dense={dense}>
               {
-                this.props.comments &&
-                this.props.comments.map(comment => 
+                comments &&
+                comments.map(comment => 
                   <ListItem key={comment.id}>
                     <ListItemAvatar>
                       <Avatar>
