@@ -44,6 +44,7 @@ class FormPopUp extends React.Component {
     author: '',
     voteScore: 1,
     commentCount: 0,
+    deleted: false,
     category: 'react'
   };
 

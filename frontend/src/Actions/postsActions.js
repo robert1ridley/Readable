@@ -223,9 +223,14 @@ export function deletePost(postId) {
   }
 }
 
-export function addPost(post) {
+export const addPost = (post) => {
   const payload = {
-    option: post
+    id: post.id,
+    timestamp: post.timestamp,
+    title: post.title,
+    body: post.body,
+    author: post.author,
+    category: post.category
   }
   return dispatch => {
     dispatch(startAddPost());
@@ -242,7 +247,7 @@ export function addPost(post) {
       })
       .then(data => {
         dispatch(addPostSuccess(post));
-        return data
+        // return data
         }
       )
       .catch(error => dispatch(addPostFailure(error)))
@@ -264,7 +269,7 @@ export function editPost(post) {
       body: JSON.stringify(post)
     })
       .then(response => {
-        console.log(response.json())
+        response.json()
       })
       .then(data => {
         dispatch(editPostSuccess(payload));

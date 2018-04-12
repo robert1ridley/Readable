@@ -6,7 +6,8 @@ import NotFound from './NotFound';
 
 //TODO: Figure out redirect on unmatched item
 const SinglePost = (props) => {
-  const { match, error, loading } = props;
+  const { match, error, loading, posts, post } = props;
+  // console.log(posts.find(post => post.id === match.params.post))
   return (
     <div>
       <OnePostItem postId={match.params.post} />
@@ -17,7 +18,9 @@ const SinglePost = (props) => {
 
 const mapStateToProps = state => ({
   loading: state.postsReducer.loading,
-  error: state.postsReducer.error
+  error: state.postsReducer.error,
+  post: state.postsReducer.post,
+  posts: state.postsReducer.items
 });
 
 export default connect(mapStateToProps)(SinglePost);
