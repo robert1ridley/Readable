@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { fetchSinglePost } from '../Actions/postsActions';
 import Card, { CardHeader, CardActions, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
@@ -90,7 +91,7 @@ class OnePostItem extends React.Component {
                       {post.body}
                     </Typography>
                     <Typography component="p" style={styles.date}>
-                      {`${new Date(post.timestamp).getDay()}/${new Date(post.timestamp).getMonth()}/${new Date(post.timestamp).getFullYear()}`}
+                      {`${moment(new Date(post.timestamp)).fromNow()}`}
                     </Typography>
                   </CardContent>
                   <CardActions>

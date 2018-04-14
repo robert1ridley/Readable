@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -63,8 +64,8 @@ function PostsList(props) {
                           label={`${post.voteScore} likes`} 
                           icon={post.voteScore < 0 ? <ThumbDown /> : <ThumbUp />} 
                         />
-                        <BottomNavigationAction 
-                          label={`${new Date(post.timestamp).getDay()}/${new Date(post.timestamp).getMonth()}/${new Date(post.timestamp).getFullYear()}`}
+                        <BottomNavigationAction
+                          label={`${moment(new Date(post.timestamp)).fromNow()}`}
                           icon={<DateRangeIcon />}
                         />
                         <BottomNavigationAction 
