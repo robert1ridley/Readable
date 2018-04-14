@@ -186,7 +186,6 @@ export function updateVotes(vote, postId) {
         response.json()
       })
       .then(data => {
-        console.log(data);
         dispatch(updateVotesSuccess(vote));
         return data
         }

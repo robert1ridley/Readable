@@ -7,8 +7,9 @@ import NotFound from './NotFound';
 class SinglePost extends React.Component {
   
   render(){
-    const { match, error, loading, posts, post } = this.props;
-    if(error){
+    const { match, error, deleted } = this.props;
+    console.log(deleted)
+    if(error || deleted){
       return (<NotFound />)
     }
     else {
@@ -23,10 +24,8 @@ class SinglePost extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.postsReducer.loading,
   error: state.postsReducer.error,
-  post: state.postsReducer.post,
-  posts: state.postsReducer.items
+  deleted: state.postsReducer.singleItem.deleted
 });
 
 export default connect(mapStateToProps)(SinglePost);

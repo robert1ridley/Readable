@@ -57,8 +57,7 @@ class UpdatePostPopUp extends React.Component {
   }
 
   render() {
-    const { post } = this.props;
-    const { name, title, body } = this.state;
+    const { title, body } = this.state;
     return (
       <form>
         <Dialog
