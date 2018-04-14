@@ -20,7 +20,6 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const START_EDIT_POST = 'START_EDIT_POST';
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
 export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
-export const EDIT_POST_FORM = 'EDIT_POST_FORM';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchSinglePost = () => ({
@@ -122,11 +121,6 @@ export const editPostFailure = error => ({
   type: EDIT_POST_FAILURE,
   payload: { error }
 });
-
-export const editPostForm = (field, text) => ({
-  type: EDIT_POST_FORM,
-  payload: { field, text }
-})
 
 const headers = {
   Authorization: Math.random().toString(36).substr(-8)
@@ -247,7 +241,7 @@ export const addPost = (post) => {
       })
       .then(data => {
         dispatch(addPostSuccess(post));
-        // return data
+        return data
         }
       )
       .catch(error => dispatch(addPostFailure(error)))
@@ -255,6 +249,7 @@ export const addPost = (post) => {
 }
 
 export function editPost(post) {
+  console.log(post)
   const payload = {
     option: post
   }

@@ -10,7 +10,7 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-import { editPost, editPostForm } from '../Actions/postsActions';
+import { editPost } from '../Actions/postsActions';
 
 const styles = theme => ({
   container: {
@@ -28,18 +28,37 @@ const styles = theme => ({
 });
 
 class UpdatePostPopUp extends React.Component {
+  state = {
+    title: '',
+    body: '',
+    id: ''
+  }
+
   handleChange = name => event => {
-    this.props.dispatch(editPostForm(name, event.target.value))
+    this.setState({
+      [name]: event.target.value
+    })
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.post !== this.props.post){
+      this.setState({
+        title: nextProps.post.title,
+        body: nextProps.post.body,
+        id: nextProps.post.id
+      })
+    }
+  }
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    this.props.dispatch(editPost(this.props.post))
+    this.props.dispatch(editPost(this.state))
     .then(this.props.history.push("/"))
   }
 
   render() {
     const { post } = this.props;
+    const { name, title, body } = this.state;
     return (
       <form>
         <Dialog
@@ -60,7 +79,7 @@ class UpdatePostPopUp extends React.Component {
               label="Post Title"
               type="text"
               onChange={this.handleChange('title')}
-              value={post.title}
+              value={title}
               fullWidth
               required
             />
@@ -74,7 +93,7 @@ class UpdatePostPopUp extends React.Component {
               label="Post Body"
               type="text"
               onChange={this.handleChange('body')}
-              value={post.body}
+              value={body}
               fullWidth
               required
             />
@@ -84,7 +103,7 @@ class UpdatePostPopUp extends React.Component {
               Cancel
             </Button>
             <Button color="primary" type="submit" onClick={(event) => this.handleSubmit(event)}>
-              Create
+              Update
             </Button>
           </DialogActions>
         </Dialog>

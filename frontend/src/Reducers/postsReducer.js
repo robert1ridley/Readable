@@ -22,7 +22,6 @@ import {
   START_EDIT_POST,
   EDIT_POST_SUCCESS,
   EDIT_POST_FAILURE,
-  EDIT_POST_FORM
 } from '../Actions/postsActions';
 
 const initialState = {
@@ -196,15 +195,6 @@ export default function postsReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error
-      }
-
-    case EDIT_POST_FORM:
-      return {
-        ...state,
-        singleItem: {
-          ...state.singleItem,
-          [action.payload.field]: action.payload.text
-        }
       }
 
     default:
