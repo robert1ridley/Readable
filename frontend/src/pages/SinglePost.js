@@ -4,16 +4,22 @@ import CommentsList from '../components/CommentsList';
 import { connect } from 'react-redux';
 import NotFound from './NotFound';
 
-//TODO: Figure out redirect on unmatched item
-const SinglePost = (props) => {
-  const { match, error, loading, posts, post } = props;
+class SinglePost extends React.Component {
   
-  return (
-    <div>
-      <OnePostItem postId={match.params.post} />
-      <CommentsList postId={match.params.post} />
-    </div>
-  )
+  render(){
+    const { match, error, loading, posts, post } = this.props;
+    if(error){
+      return (<NotFound />)
+    }
+    else {
+      return (
+        <div>
+          <OnePostItem postId={match.params.post} />
+          <CommentsList postId={match.params.post} />
+        </div>
+      )
+    }
+  }
 }
 
 const mapStateToProps = state => ({

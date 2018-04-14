@@ -16,6 +16,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import Chip from 'material-ui/Chip';
 import { updateVotes, deletePost } from '../Actions/postsActions';
 import UpdatePostPopUp from './UpdatePostPopUp';
+import NotFound from '../pages/NotFound';
 
 const styles = {
   card: {
@@ -33,7 +34,8 @@ const styles = {
 
 class OnePostItem extends React.Component {
   state = {
-    open: false
+    open: false,
+    notFound: false
   }
 
   openPopup = () => {
@@ -49,7 +51,17 @@ class OnePostItem extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchSinglePost(this.props.postId));
+    this.props.dispatch(fetchSinglePost(this.props.postId))
+    //   .then(() => {
+    //     this.props.error ?
+    //     this.setState ({
+    //       notFound: true
+    //     }):
+    //     this.setState ({
+    //       notFound: false
+    //     })
+    //   }
+    // )
   }
 
   voteOnPost(vote) {
@@ -63,7 +75,7 @@ class OnePostItem extends React.Component {
 
   render() {
     const { post, loading, postId } = this.props;
-    const { open } = this.state;
+    const { open, notFound } = this.state;
     return (
       <div>
         {
