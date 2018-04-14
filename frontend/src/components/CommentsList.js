@@ -8,12 +8,16 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import FaceIcon from 'material-ui-icons/Face';
+import ThumbUp from 'material-ui-icons/ThumbUp';
+import ThumbDown from 'material-ui-icons/ThumbDown';
 import List, {
   ListItem,
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
 } from 'material-ui/List';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import Button from 'material-ui/Button';
 import { fetchComments } from '../Actions/commentsActions';
 
 const styles = theme => ({
@@ -30,8 +34,19 @@ const styles = theme => ({
 });
 
 class CommentsList extends React.Component {
+  // state = {
+  //   dense: true
+  // };
   state = {
-    dense: true
+    anchorEl: null,
+  };
+
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
   };
 
   componentDidMount() {
@@ -40,7 +55,7 @@ class CommentsList extends React.Component {
 
   render () {
     const { classes, comments } = this.props;
-    const { dense } = this.state;
+    const { dense, anchorEl } = this.state;
     
     return (
       <Grid container spacing={24} style={{flexGrow: 1}}>
@@ -65,12 +80,42 @@ class CommentsList extends React.Component {
                       secondary={comment.author}
                     />
                     <ListItemSecondaryAction>
-                      <IconButton aria-label="Edit">
-                        <ModeEditIcon />
-                      </IconButton>
-                      <IconButton aria-label="Delete">
-                        <DeleteIcon />
-                      </IconButton>
+                      <Button
+                        aria-owns={anchorEl ? 'simple-menu' : null}
+                        aria-haspopup="true"
+                        onClick={this.handleClick}
+                      >
+                        <IconButton aria-label="Edit">
+                          <ModeEditIcon />
+                        </IconButton>
+                      </Button>
+                      <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={this.handleClose}
+                      >
+                        <MenuItem onClick={this.handleClose}>
+                          <IconButton aria-label="Edit">
+                            <ModeEditIcon />
+                          </IconButton>
+                        </MenuItem>
+                        <MenuItem onClick={this.handleClose}>
+                          <IconButton aria-label="Delete">
+                            <DeleteIcon />
+                          </IconButton>
+                        </MenuItem>
+                        <MenuItem onClick={this.handleClose}>
+                          <IconButton aria-label="like">
+                            <ThumbUp />
+                          </IconButton>
+                        </MenuItem>
+                        <MenuItem onClick={this.handleClose}>
+                          <IconButton aria-label="dislike">
+                            <ThumbDown />
+                          </IconButton>
+                        </MenuItem>
+                      </Menu>
                     </ListItemSecondaryAction>
                   </ListItem>
                 )
