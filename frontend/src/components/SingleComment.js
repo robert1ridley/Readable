@@ -122,7 +122,7 @@ class SingleComment extends React.Component {
     const { classes, comment } = this.props;
     const { votesUpdated } = this.state;
     return (
-      <div key={comment.id} className={votesUpdated? classes.activeListItemContainer : classes.listItemContainer}>
+      <div className={votesUpdated? classes.activeListItemContainer : classes.listItemContainer}>
         <ListItem>
           <ListItemAvatar>
             <Avatar>

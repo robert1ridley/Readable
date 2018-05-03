@@ -4,6 +4,9 @@ export const FETCH_COMMENTS_FAILURE = 'FETCH_COMMENTS_FAILURE';
 export const START_UPDATE_COMMENT_VOTE_COUNT = 'START_UPDATE_COMMENT_VOTE_COUNT';
 export const UPDATE_COMMENT_VOTE_COUNT_SUCCESS = 'UPDATE_COMMENT_VOTE_COUNT_SUCCESS';
 export const UPDATE_COMMENT_VOTE_COUNT_FAILURE = 'UPDATE_COMMENT_VOTE_COUNT_FAILURE';
+export const START_EDIT_COMMENT = 'START_EDIT_COMMENT';
+export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
+export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchComments = () => ({
@@ -33,6 +36,20 @@ export const updateCommentVoteCountFailure = error => ({
   type: UPDATE_COMMENT_VOTE_COUNT_FAILURE,
   payload: { error }
 });
+
+export const startEditComment = () => ({
+  type: START_EDIT_COMMENT
+});
+
+export const editCommentSuccess = (comment) => ({
+  type: EDIT_COMMENT_SUCCESS,
+  payload: { comment }
+});
+
+export const editCommentFailure = error => ({
+  type: EDIT_COMMENT_FAILURE,
+  payload: { error }
+})
 
 const headers = {
   Authorization: Math.random().toString(36).substr(-8)
@@ -75,6 +92,35 @@ export function updateCommentVoteCount(vote, commentId) {
         }
       )
       .catch(error => dispatch(updateCommentVoteCountFailure(error)))
+  }
+}
+
+export function editComment(comment) {
+  console.log(comment)
+  const payload = {
+    timestamp: comment.timestamp,
+    body: comment.body,
+    id: comment.id
+  }
+  return dispatch => {
+    dispatch(startEditComment());
+    return fetch(`${BASE_URL}/comments/${comment.id}`, { 
+      headers: { 
+        'Authorization': headers.Authorization,
+        'content-type': 'application/json'
+      },
+      method: "PUT",
+      body: JSON.stringify(comment)
+    })
+      .then(response => {
+        response.json()
+      })
+      .then(data => {
+        dispatch(editCommentSuccess(payload));
+        return data
+        }
+      )
+      .catch(error => dispatch(editCommentFailure(error)))
   }
 }
 

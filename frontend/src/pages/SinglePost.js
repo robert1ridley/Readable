@@ -8,7 +8,6 @@ class SinglePost extends React.Component {
   
   render(){
     const { match, error, deleted } = this.props;
-    console.log(deleted)
     if(error || deleted){
       return (<NotFound />)
     }

@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Dialog, {
@@ -7,6 +9,8 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
+
+import { editComment } from '../Actions/commentsActions';
 
 const styles = theme => ({
   container: {
@@ -25,8 +29,14 @@ const styles = theme => ({
 
 class UpdateCommentPopUp extends React.Component {
   state = {
+    author: '',
     body: '',
-    id: ''
+    deleted: '',
+    id: '',
+    parentDeleted: '',
+    parentId: '',
+    timestamp: '',
+    voteScore: ''
   }
 
   handleChange = name => event => {
@@ -36,18 +46,23 @@ class UpdateCommentPopUp extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log("EVOKED")
     this.setState({
+      author: nextProps.comment.author, 
       body: nextProps.comment.body,
-      id: nextProps.comment.id
+      deleted: nextProps.comment.deleted,
+      id: nextProps.comment.id,
+      parentDeleted: nextProps.comment.parentDeleted,
+      parentId: nextProps.comment.parentId,
+      timestamp: nextProps.comment.timestamp,
+      voteScore: nextProps.comment.voteScore
     })
   }
 
-  // handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   this.props.dispatch(editPost(this.state))
-  //   .then(this.props.history.push("/"))
-  // }
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    this.props.dispatch(editComment(this.state))
+    .then(this.props.closePopUp)
+  }
 
   render() {
     const { body } = this.state;
@@ -72,7 +87,7 @@ class UpdateCommentPopUp extends React.Component {
               id="body"
               label="Post Body"
               type="text"
-              // onChange={this.handleChange('body')}
+              onChange={this.handleChange('body')}
               value={body}
               fullWidth
               required
@@ -92,13 +107,10 @@ class UpdateCommentPopUp extends React.Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   post: state.postsReducer.singleItem,
-//   loading: state.postsReducer.loading,
-//   error: state.postsReducer.error
-// });
+const mapStateToProps = state => ({
+  loading: state.postsReducer.loading,
+  error: state.postsReducer.error
+});
 
-// const wrappedComponent = withStyles(styles)(UpdatePostPopUp);
-// const wrappedComponentWithRouter = withRouter(wrappedComponent);
-// export default connect(mapStateToProps)(wrappedComponentWithRouter);
-export default UpdateCommentPopUp;
+const wrappedComponent = withRouter(UpdateCommentPopUp);
+export default connect(mapStateToProps)(wrappedComponent);
