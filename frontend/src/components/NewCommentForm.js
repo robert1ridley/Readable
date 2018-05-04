@@ -41,7 +41,8 @@ class NewCommentForm extends React.Component {
     timestamp: '',
     body: '',
     author: '',
-    parentId: ''
+    parentId: '',
+    voteScore: 0
   };
 
   handleChange = name => event => {
@@ -98,7 +99,7 @@ class NewCommentForm extends React.Component {
               rows="2"
               name="body"
               id="body"
-              label="Post Body"
+              label="Comment Body"
               type="text"
               onChange={this.handleChange('body')}
               fullWidth

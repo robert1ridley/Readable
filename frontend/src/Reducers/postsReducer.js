@@ -23,6 +23,9 @@ import {
   EDIT_POST_SUCCESS,
   EDIT_POST_FAILURE,
 } from '../Actions/postsActions';
+import {
+  ADD_COMMENT_COUNT_TO_POST
+} from '../Actions/commentsActions';
 
 const initialState = {
   items: [],
@@ -194,6 +197,15 @@ export default function postsReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error
+      }
+
+    case ADD_COMMENT_COUNT_TO_POST:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        items: [...state.items.map((item) => ({...item,          
+          commentCount: item.id === action.payload && item.commentCount + 1}))]
       }
 
     default:
