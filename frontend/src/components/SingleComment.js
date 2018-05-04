@@ -118,6 +118,10 @@ class SingleComment extends React.Component {
     }), 1000)
   }
 
+  deleteComment(commentId) {
+    alert("Comment Deleted")
+  }
+
   render() {
     const { classes, comment } = this.props;
     const { votesUpdated } = this.state;
@@ -136,25 +140,34 @@ class SingleComment extends React.Component {
         </ListItem>
         <div className={classes.commentText}>{comment.voteScore} <span>Likes</span>
           <div className={classes.row}>
-            <Avatar className={classes.blueAvatar}>
+            <Avatar
+              className={classes.blueAvatar}
+              onClick={this.openPopup}
+            >
               <ModeEditIcon
                 className={classes.icon}
-                onClick={this.openPopup}
               />
             </Avatar>
-            <Avatar className={classes.pinkAvatar}>
+            <Avatar
+              className={classes.pinkAvatar}
+              onClick={this.deleteComment}
+            >
               <DeleteIcon className={classes.icon} />
             </Avatar>
-            <Avatar className={classes.greenAvatar}>
+            <Avatar
+              className={classes.greenAvatar}
+              onClick={() => this.voteOnComment("upVote", comment.id)}
+            >
               <ThumbUp 
                 className={classes.icon}
-                onClick={() => this.voteOnComment("upVote", comment.id)}
               />
             </Avatar>
-            <Avatar className={classes.redAvatar}>
+            <Avatar
+              className={classes.redAvatar}
+              onClick={() => this.voteOnComment("downVote", comment.id)}
+            >
               <ThumbDown
                 className={classes.icon}
-                onClick={() => this.voteOnComment("downVote", comment.id)}
               />
             </Avatar>
           </div>
