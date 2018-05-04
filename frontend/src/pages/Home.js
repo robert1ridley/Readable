@@ -7,7 +7,7 @@ import SortButtons from '../components/SortButtons';
 class Home extends React.Component{
   
   componentDidMount() {
-    this.props.dispatch(fetchPosts());
+    this.props.dispatch(fetchPosts())
   }
 
   render() {

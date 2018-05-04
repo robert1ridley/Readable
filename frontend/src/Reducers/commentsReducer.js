@@ -10,7 +10,10 @@ import {
   EDIT_COMMENT_FAILURE,
   START_DELETE_COMMENT,
   DELETE_COMMENT_SUCCESS,
-  DELETE_COMMENT_FAILURE
+  DELETE_COMMENT_FAILURE,
+  START_ADD_COMMENT,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAILURE
 } from '../Actions/commentsActions';
 
 const initialState = {
@@ -98,7 +101,6 @@ export default function commentsReducer(state = initialState, action) {
       };
 
     case DELETE_COMMENT_SUCCESS:
-    console.log(action.payload)
       return {
         ...state,
         loading: false,
@@ -107,6 +109,28 @@ export default function commentsReducer(state = initialState, action) {
       }
 
     case DELETE_COMMENT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
+      }
+
+    case START_ADD_COMMENT:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
+
+    case ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        items: [...state.items, action.payload]
+      }
+
+    case ADD_COMMENT_FAILURE:
       return {
         ...state,
         loading: false,

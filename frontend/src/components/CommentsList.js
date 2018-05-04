@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography';
 import List from 'material-ui/List';
 import { fetchComments } from '../Actions/commentsActions';
 import SingleComment from './SingleComment';
+import AddComment from './AddComment';
 
 const styles = theme => ({
   background: {
@@ -33,6 +34,7 @@ class CommentsList extends React.Component {
           </Typography>
           <div className={classes.background}>
             <List>
+              <AddComment />
               {
                 comments &&
                 comments.map(comment =>

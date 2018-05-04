@@ -10,6 +10,9 @@ export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE';
 export const START_DELETE_COMMENT = 'START_DELETE_COMMENT';
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
+export const START_ADD_COMMENT = 'START_ADD_COMMENT';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchComments = () => ({
@@ -65,6 +68,20 @@ export const deleteCommentSuccess = (commentId) => ({
 
 export const deleteCommentFailure = error => ({
   type: DELETE_COMMENT_FAILURE,
+  payload: error
+});
+
+export const startAddComment = () => ({
+  type: START_ADD_COMMENT
+});
+
+export const addCommentSuccess = (comment) => ({
+  type: ADD_COMMENT_SUCCESS,
+  payload: comment
+});
+
+export const addCommentFailure = error => ({
+  type: ADD_COMMENT_FAILURE,
   payload: error
 })
 
@@ -162,6 +179,36 @@ export function deleteComment(commentId) {
         }
       )
       .catch(error => dispatch(deleteCommentFailure(error)))
+  }
+}
+
+export const addComment = (comment) => {
+  const payload = {
+    id: comment.id,
+    timestamp: comment.timestamp,
+    body: comment.body,
+    author: comment.author,
+    parentId: comment.parentId
+  }
+  return dispatch => {
+    dispatch(startAddComment());
+    return fetch(`${BASE_URL}/comments`, { 
+      headers: { 
+        'Authorization': headers.Authorization,
+        'content-type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        response.json()
+      })
+      .then(data => {
+        dispatch(addCommentSuccess(comment));
+        return data
+        }
+      )
+      .catch(error => dispatch(addCommentFailure(error)))
   }
 }
 
