@@ -17,7 +17,7 @@ import {
   ListItemText,
 } from 'material-ui/List';
 
-import { updateCommentVoteCount } from '../Actions/commentsActions';
+import { updateCommentVoteCount, deleteComment } from '../Actions/commentsActions';
 import UpdateCommentPopUp from './UpdateCommentPopUp';
 
 const styles = theme => ({
@@ -119,7 +119,7 @@ class SingleComment extends React.Component {
   }
 
   deleteComment(commentId) {
-    alert("Comment Deleted")
+    this.props.dispatch(deleteComment(commentId))
   }
 
   render() {
@@ -150,7 +150,7 @@ class SingleComment extends React.Component {
             </Avatar>
             <Avatar
               className={classes.pinkAvatar}
-              onClick={this.deleteComment}
+              onClick={() => this.deleteComment(comment.id)}
             >
               <DeleteIcon className={classes.icon} />
             </Avatar>

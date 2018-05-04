@@ -36,10 +36,12 @@ class CommentsList extends React.Component {
               {
                 comments &&
                 comments.map(comment =>
+                  !comment.deleted ?
                   <SingleComment
                     comment={comment}
                     key={comment.id}
-                  />
+                  /> :
+                  <div />
                 )
               }
             </List>

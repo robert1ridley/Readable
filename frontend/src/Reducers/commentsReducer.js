@@ -7,7 +7,10 @@ import {
   UPDATE_COMMENT_VOTE_COUNT_FAILURE,
   START_EDIT_COMMENT,
   EDIT_COMMENT_SUCCESS,
-  EDIT_COMMENT_FAILURE
+  EDIT_COMMENT_FAILURE,
+  START_DELETE_COMMENT,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_FAILURE
 } from '../Actions/commentsActions';
 
 const initialState = {
@@ -71,13 +74,43 @@ export default function commentsReducer(state = initialState, action) {
       };
 
     case EDIT_COMMENT_SUCCESS:
-    console.log(action.payload.comment)
       return {
         ...state,
         loading: false,
+        error: null,
         items: [...state.items.map((item) => ({...item,
           body: item.id === action.payload.comment.id ? action.payload.comment.body : item.body
         }))]
+      };
+
+    case EDIT_COMMENT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
+      }
+
+    case START_DELETE_COMMENT:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
+    case DELETE_COMMENT_SUCCESS:
+    console.log(action.payload)
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        items: state.items.filter(item => item.id !== action.payload),
+      }
+
+    case DELETE_COMMENT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
       }
 
     default:

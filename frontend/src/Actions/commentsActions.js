@@ -7,6 +7,9 @@ export const UPDATE_COMMENT_VOTE_COUNT_FAILURE = 'UPDATE_COMMENT_VOTE_COUNT_FAIL
 export const START_EDIT_COMMENT = 'START_EDIT_COMMENT';
 export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
 export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE';
+export const START_DELETE_COMMENT = 'START_DELETE_COMMENT';
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
+export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchComments = () => ({
@@ -49,6 +52,20 @@ export const editCommentSuccess = (comment) => ({
 export const editCommentFailure = error => ({
   type: EDIT_COMMENT_FAILURE,
   payload: { error }
+});
+
+export const startDeleteComment = () => ({
+  type: START_DELETE_COMMENT
+});
+
+export const deleteCommentSuccess = (commentId) => ({
+  type: DELETE_COMMENT_SUCCESS,
+  payload: commentId
+});
+
+export const deleteCommentFailure = error => ({
+  type: DELETE_COMMENT_FAILURE,
+  payload: error
 })
 
 const headers = {
@@ -83,6 +100,7 @@ export function updateCommentVoteCount(vote, commentId) {
       method: "POST",
       body: JSON.stringify(payload)
     })
+      .then(handleErrors)
       .then(response => {
         response.json()
       })
@@ -96,7 +114,6 @@ export function updateCommentVoteCount(vote, commentId) {
 }
 
 export function editComment(comment) {
-  console.log(comment)
   const payload = {
     timestamp: comment.timestamp,
     body: comment.body,
@@ -112,6 +129,7 @@ export function editComment(comment) {
       method: "PUT",
       body: JSON.stringify(comment)
     })
+    .then(handleErrors)
       .then(response => {
         response.json()
       })
@@ -121,6 +139,29 @@ export function editComment(comment) {
         }
       )
       .catch(error => dispatch(editCommentFailure(error)))
+  }
+}
+
+export function deleteComment(commentId) {
+  return dispatch => {
+    dispatch(startDeleteComment());
+    return fetch(`${BASE_URL}/comments/${commentId}`, { 
+      headers: { 
+        'Authorization': headers.Authorization,
+        'content-type': 'application/json'
+      },
+      method: "DELETE"
+    })
+    .then(handleErrors)
+      .then(response => {
+        response.json()
+      })
+      .then(data => {
+        dispatch(deleteCommentSuccess(commentId));
+        return data
+        }
+      )
+      .catch(error => dispatch(deleteCommentFailure(error)))
   }
 }
 
