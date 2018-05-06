@@ -11,6 +11,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchCategories } from '../Actions/categoryActions';
+import { capitalizeFirstLetter } from '../utils';
 
 const styles = {
   root: {
@@ -61,7 +62,7 @@ class Header extends React.Component {
             </IconButton>
             
             <Typography variant="title" color="inherit" className={classes.flex}>
-              {currentCategory}
+              {capitalizeFirstLetter(currentCategory)}
             </Typography>
           </Toolbar>
           <Menu
@@ -78,17 +79,17 @@ class Header extends React.Component {
                     component={Link} to="/"
                     style={{outline: 'none'}}
                   >
-                    home
+                    Home
                   </MenuItem>
                   {
                     categories.map((category) => 
                       <MenuItem
                         key={category.path}
                         onClick={this.handleClose}
-                        component={Link} to={category.path}
+                        component={Link} to={`/${category.path}`}
                         style={{outline: 'none'}}
                       >
-                        {category.name}
+                        {capitalizeFirstLetter(category.name)}
                       </MenuItem>
                     )
                   }

@@ -11,6 +11,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 import { addPost } from '../Actions/postsActions';
+import { generateUid, capitalizeFirstLetter } from '../utils';
 
 const styles = theme => ({
   container: {
@@ -26,14 +27,6 @@ const styles = theme => ({
     width: 200,
   },
 });
-
-function guid() {
-  function _p8(s) {
-      var p = (Math.random().toString(16)+"000000000").substr(2,8);
-      return s ? "-" + p.substr(0,4) + "-" + p.substr(4,4) : p ;
-  }
-  return _p8() + _p8(true) + _p8(true) + _p8();
-}
 
 class FormPopUp extends React.Component {
   state = {
@@ -57,7 +50,7 @@ class FormPopUp extends React.Component {
   updateStateOnSubmit = () => {
     this.setState({
       timestamp: Date.now(),
-      id: guid()
+      id: generateUid()
     })
   }
 
@@ -139,7 +132,7 @@ class FormPopUp extends React.Component {
             >
               {categories.map(option => (
               <option key={option.name} value={option.name}>
-                {option.name}
+                {capitalizeFirstLetter(option.name)}
               </option>
               ))}
             </TextField>

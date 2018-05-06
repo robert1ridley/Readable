@@ -11,6 +11,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 import { addComment } from '../Actions/commentsActions';
+import { generateUid } from '../utils';
 
 const styles = theme => ({
   container: {
@@ -26,14 +27,6 @@ const styles = theme => ({
     width: 200,
   },
 });
-
-function guid() {
-  function _p8(s) {
-      var p = (Math.random().toString(16)+"000000000").substr(2,8);
-      return s ? "-" + p.substr(0,4) + "-" + p.substr(4,4) : p ;
-  }
-  return _p8() + _p8(true) + _p8(true) + _p8();
-}
 
 class NewCommentForm extends React.Component {
   state = {
@@ -54,7 +47,7 @@ class NewCommentForm extends React.Component {
   updateStateOnSubmit = () => {
     this.setState({
       timestamp: Date.now(),
-      id: guid(),
+      id: generateUid(),
       parentId: this.props.match.params.post
     })
   }
@@ -62,7 +55,6 @@ class NewCommentForm extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     await this.updateStateOnSubmit()
-    console.log(this.state)
     this.props.dispatch(addComment(this.state))
     .then(this.props.closePopUp)
   }
