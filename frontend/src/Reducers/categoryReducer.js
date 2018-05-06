@@ -1,11 +1,13 @@
 import {
   START_FETCH_CATEGORIES,
   FETCH_CATEGORIES_SUCCESS,
-  FETCH_CATEGORIES_FAILURE
+  FETCH_CATEGORIES_FAILURE,
+  SET_CURRENT_CATEGORY
 } from '../Actions/categoryActions';
 
 const initialState = {
   items: [],
+  currentCategory: 'Home',
   loading: false,
   error: null
 };
@@ -33,6 +35,12 @@ export default function categoryReducer(state = initialState, action) {
         error: action.payload.error,
         items: []
       };
+
+    case SET_CURRENT_CATEGORY:
+      return {
+        ...state,
+        currentCategory: action.payload
+      }
 
     default:
       return state;

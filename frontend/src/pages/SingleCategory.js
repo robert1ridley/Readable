@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PostsList from '../components/PostsList';
 import { fetchPostsByCategory } from '../Actions/postsActions';
+import { setCategory } from '../Actions/categoryActions'
 import SortButtons from '../components/SortButtons';
 import NotFound from './NotFound';
 
@@ -11,11 +12,10 @@ class SingleCategory extends React.Component {
   }
 
   componentDidMount() {
+    const pageId = this.props.match.params.category;
     this.props.dispatch(fetchPostsByCategory(this.props.match.params.category))
     .then(() => {
-      const pageId = this.props.match.params.category;
       const foundIndex = this.props.categories.findIndex((el) => (el.name === pageId));
-      console.log(foundIndex)
       foundIndex<0 ?
         this.setState ({
           notFound: true
@@ -25,15 +25,15 @@ class SingleCategory extends React.Component {
         })
       }
     )
+    .then(() => this.props.dispatch(setCategory(pageId)))
   }
 
   componentWillReceiveProps(nextProps) {
+    const pageId = nextProps.match.params.category;
     if (nextProps.match.params.category !== this.props.match.params.category && !this.props.loading){
       this.props.dispatch(fetchPostsByCategory(nextProps.match.params.category))
       .then(() => {
-        const pageId = nextProps.match.params.category;
         const foundIndex = nextProps.categories.findIndex((el) => (el.name === pageId));
-        console.log(foundIndex)
         foundIndex<0 ?
           this.setState ({
             notFound: true
@@ -43,6 +43,7 @@ class SingleCategory extends React.Component {
           })
         }
       )
+      .then(() => this.props.dispatch(setCategory(pageId)))
     }
   }
 

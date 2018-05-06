@@ -1,6 +1,7 @@
 export const START_FETCH_CATEGORIES = 'START_FETCH_CATEGORIES';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const FETCH_CATEGORIES_FAILURE = 'FETCH_CATEGORIES_FAILURE';
+export const SET_CURRENT_CATEGORY = 'SET_CURRENT_CATEGORY';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchCategories = () => ({
@@ -16,6 +17,11 @@ export const fetchCategoriesFailure = error => ({
   type: FETCH_CATEGORIES_FAILURE,
   payload: { error }
 });
+
+export const setCurrentCategory = categoryName => ({
+  type: SET_CURRENT_CATEGORY,
+  payload: categoryName
+})
 
 const headers = {
   Authorization: Math.random().toString(36).substr(-8)
@@ -33,6 +39,10 @@ export function fetchCategories() {
       })
       .catch(error => dispatch(fetchCategoriesFailure(error)));
   };
+}
+
+export function setCategory(categoryName) {
+  return dispatch => dispatch(setCurrentCategory(categoryName));
 }
 
 function handleErrors(response) {

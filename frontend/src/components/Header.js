@@ -1,18 +1,41 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from 'material-ui-icons/Menu';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchCategories } from '../Actions/categoryActions';
 
-class Header extends React.Component{
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+};
+
+class Header extends React.Component {
   state = {
-    value: 0
+    anchorEl: null,
   };
 
-  handleChange = (event, value) => {
-    this.setState({ value });
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
   };
 
   componentDidMount() {
@@ -20,41 +43,72 @@ class Header extends React.Component{
   };
 
   render() {
-    const { classes, categories  } = this.props;
-    const { value } = this.state;
+    const { anchorEl } = this.state;
+    const { classes, currentCategory, categories } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Tabs value={value} onChange={this.handleChange}>
+          <Toolbar>
+            <IconButton
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="Menu"
+              aria-owns={anchorEl ? 'simple-menu' : null}
+              aria-haspopup="true"
+              onClick={this.handleClick}
+            >
+              <MenuIcon />
+            </IconButton>
+            
+            <Typography variant="title" color="inherit" className={classes.flex}>
+              {currentCategory}
+            </Typography>
+          </Toolbar>
+          <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={this.handleClose}
+            >
             {
-              categories.length !== 0 &&
-              <Tab label="Home" component={Link} to="/" />
-            }
-            {
-              categories.length !== 0 &&
-              categories.map((category, index) =>
-                <Tab label={category.name} key={index + 1} style={{color: 'white'}} component={Link} to={`/${category.path}`} />
-              )
-            }
-          </Tabs>
+              categories &&
+                <div>
+                  <MenuItem
+                    onClick={this.handleClose}
+                    component={Link} to="/"
+                    style={{outline: 'none'}}
+                  >
+                    home
+                  </MenuItem>
+                  {
+                    categories.map((category) => 
+                      <MenuItem
+                        key={category.path}
+                        onClick={this.handleClose}
+                        component={Link} to={category.path}
+                        style={{outline: 'none'}}
+                      >
+                        {category.name}
+                      </MenuItem>
+                    )
+                  }
+                </div>
+              }
+            </Menu>
         </AppBar>
       </div>
-    )
+    );
   }
 }
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-});
+Header.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = state => ({
-  categories: state.categoryReducer.items,
-  loading: state.categoryReducer.loading,
-  error: state.categoryReducer.error
+  currentCategory: state.categoryReducer.currentCategory,
+  categories: state.categoryReducer.items
 });
 
-const styledComponent = withStyles(styles)(Header);
-export default connect(mapStateToProps)(styledComponent);
+const wrappedComponent = connect(mapStateToProps)(Header)
+export default withStyles(styles)(wrappedComponent);

@@ -3,8 +3,12 @@ import OnePostItem from '../components/OnePostItem';
 import CommentsList from '../components/CommentsList';
 import { connect } from 'react-redux';
 import NotFound from './NotFound';
+import { setCategory } from '../Actions/categoryActions';
 
 class SinglePost extends React.Component {
+  componentDidMount(){
+    this.props.dispatch(setCategory(this.props.match.params.category));
+  }
   
   render(){
     const { match, error, deleted } = this.props;
