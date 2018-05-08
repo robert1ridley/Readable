@@ -181,9 +181,7 @@ export function deleteComment(commentId) {
       })
       .then(data => {
         dispatch(deleteCommentSuccess(commentId));
-        return data
-        }
-      )
+        })
       .catch(error => dispatch(deleteCommentFailure(error)))
   }
 }
@@ -206,6 +204,7 @@ export const addComment = (comment) => {
       method: "POST",
       body: JSON.stringify(payload)
     })
+      .then(handleErrors)
       .then(response => {
         response.json()
       })
