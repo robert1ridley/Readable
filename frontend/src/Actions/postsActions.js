@@ -182,15 +182,16 @@ export function updateVotes(vote, postId) {
       method: "POST",
       body: JSON.stringify(payload)
     })
-      .then(response => {
-        response.json()
-      })
-      .then(data => {
-        dispatch(updateVotesSuccess(vote));
-        return data
-        }
-      )
-      .catch(error => dispatch(updateVotesFailure(error)))
+    .then(handleErrors)
+    .then(response => {
+      response.json()
+    })
+    .then(data => {
+      dispatch(updateVotesSuccess(vote));
+      return data
+      }
+    )
+    .catch(error => dispatch(updateVotesFailure(error)))
   }
 }
 
@@ -204,15 +205,16 @@ export function deletePost(postId) {
       },
       method: "DELETE"
     })
-      .then(response => {
-        response.json()
-      })
-      .then(data => {
-        dispatch(deletePostSuccess(postId));
-        return data
-        }
-      )
-      .catch(error => dispatch(deletePostFailure(error)))
+    .then(handleErrors)
+    .then(response => {
+      response.json()
+    })
+    .then(data => {
+      dispatch(deletePostSuccess(postId));
+      return data
+      }
+    )
+    .catch(error => dispatch(deletePostFailure(error)))
   }
 }
 
@@ -235,20 +237,20 @@ export const addPost = (post) => {
       method: "POST",
       body: JSON.stringify(payload)
     })
-      .then(response => {
-        response.json()
-      })
-      .then(data => {
-        dispatch(addPostSuccess(post));
-        return data
-        }
-      )
-      .catch(error => dispatch(addPostFailure(error)))
+    .then(handleErrors)
+    .then(response => {
+      response.json()
+    })
+    .then(data => {
+      dispatch(addPostSuccess(post));
+      return data
+      }
+    )
+    .catch(error => dispatch(addPostFailure(error)))
   }
 }
 
 export function editPost(post) {
-  console.log(post)
   const payload = {
     option: post
   }
@@ -262,15 +264,16 @@ export function editPost(post) {
       method: "PUT",
       body: JSON.stringify(post)
     })
-      .then(response => {
-        response.json()
-      })
-      .then(data => {
-        dispatch(editPostSuccess(payload));
-        return data
-        }
-      )
-      .catch(error => dispatch(editPostFailure(error)))
+    .then(handleErrors)
+    .then(response => {
+      response.json()
+    })
+    .then(data => {
+      dispatch(editPostSuccess(payload));
+      return data
+      }
+    )
+    .catch(error => dispatch(editPostFailure(error)))
   }
 }
 

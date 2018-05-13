@@ -12,7 +12,6 @@ class Routes extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          {/* <Header /> */}
           <Header />
           <Switch>
             <Route exact path="/" component={Home} />

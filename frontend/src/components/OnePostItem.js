@@ -142,6 +142,7 @@ class OnePostItem extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  
   post: state.postsReducer.singleItem,
   loading: state.postsReducer.loading,
   error: state.postsReducer.error

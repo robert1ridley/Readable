@@ -13,7 +13,6 @@ export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
 export const START_ADD_COMMENT = 'START_ADD_COMMENT';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
-export const ADD_COMMENT_COUNT_TO_POST = 'ADD_COMMENT_COUNT_TO_POST';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchComments = () => ({
@@ -85,11 +84,6 @@ export const addCommentFailure = error => ({
   type: ADD_COMMENT_FAILURE,
   payload: error
 });
-
-export const addCommentCountToPost = (postId) => ({
-  type: ADD_COMMENT_COUNT_TO_POST,
-  payload: postId
-})
 
 const headers = {
   Authorization: Math.random().toString(36).substr(-8)
@@ -210,9 +204,6 @@ export const addComment = (comment) => {
       })
       .then(data => {
         dispatch(addCommentSuccess(comment));
-      })
-      .then(data => {
-        dispatch(addCommentCountToPost(comment.parentId))
       })
       .catch(error => dispatch(addCommentFailure(error)))
   }
