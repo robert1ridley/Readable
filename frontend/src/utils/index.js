@@ -9,3 +9,16 @@ export const generateUid = () => {
   }
   return _p8() + _p8(true) + _p8(true) + _p8();
 }
+
+export const calculateCommentCount = (postId, originalCommentCount, updatesList) => {
+  if(updatesList.length === 0){
+    return originalCommentCount
+  }
+  const foundIndex = updatesList.findIndex(i => i.postId === postId)
+  if(foundIndex === -1){
+    return originalCommentCount
+  }
+  else {
+    return originalCommentCount + updatesList[foundIndex].countIncrease
+  }
+}

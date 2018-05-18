@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
@@ -13,6 +14,7 @@ import InsertCommentIcon from 'material-ui-icons/InsertComment';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import AddPost from './AddPost';
+import { calculateCommentCount } from '../utils';
 
 const styles = theme => ({
   root: {
@@ -35,7 +37,7 @@ const styles = theme => ({
 });
 
 function PostsList(props) {
-  const { classes, posts } = props;
+  const { classes, posts, updatedCommentCounts } = props;
   return (
     <Grid container spacing={24} style={{flexGrow: 1}}>
       <Grid item md={3} xs={1} />
@@ -68,8 +70,10 @@ function PostsList(props) {
                           label={`${moment(new Date(post.timestamp)).fromNow()}`}
                           icon={<DateRangeIcon />}
                         />
-                        <BottomNavigationAction 
-                          label={`${post.commentCount} comments`} 
+                        <BottomNavigationAction
+                          label={
+                            `${calculateCommentCount(post.id, post.commentCount, updatedCommentCounts)} comments`
+                          } 
                           icon={<InsertCommentIcon />}
                         />
                         <BottomNavigationAction 
@@ -89,4 +93,9 @@ function PostsList(props) {
   );
 }
 
-export default withStyles(styles)(PostsList);
+const mapStateToProps = state => ({
+  updatedCommentCounts: state.postsReducer.updatedCommentCounts
+});
+
+const wrappedComponent = withStyles(styles)(PostsList);
+export default connect(mapStateToProps)(wrappedComponent);

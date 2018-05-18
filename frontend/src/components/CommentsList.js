@@ -24,7 +24,7 @@ class CommentsList extends React.Component {
   }
 
   render () {
-    const { classes, comments } = this.props;
+    const { classes, comments, postId } = this.props;
     return (
       <Grid container spacing={24} style={{flexGrow: 1}}>
         <Grid item md={3} xs={1} />
@@ -42,6 +42,7 @@ class CommentsList extends React.Component {
                   <SingleComment
                     comment={comment}
                     key={comment.id}
+                    parentId={postId}
                   /> :
                   <div />
                 )

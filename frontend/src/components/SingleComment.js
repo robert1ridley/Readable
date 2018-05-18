@@ -119,7 +119,7 @@ class SingleComment extends React.Component {
   }
 
   deleteComment(commentId) {
-    this.props.dispatch(deleteComment(commentId))
+    this.props.dispatch(deleteComment(commentId, this.props.parentId))
   }
 
   render() {

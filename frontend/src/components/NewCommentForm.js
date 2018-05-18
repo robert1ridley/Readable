@@ -60,7 +60,7 @@ class NewCommentForm extends React.Component {
   }
 
   render() {
-    const { classes, open, closePopUp } = this.props;
+    const { open, closePopUp } = this.props;
     return (
       <form>
         <Dialog

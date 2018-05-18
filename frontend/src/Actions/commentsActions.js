@@ -13,6 +13,8 @@ export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
 export const START_ADD_COMMENT = 'START_ADD_COMMENT';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+export const ADD_COMMENT_TO_POST_REDUCER = 'ADD_COMMENT_TO_POST_REDUCER';
+export const REMOVE_COMMENT_FROM_POST_REDUCER = 'REMOVE_COMMENT_FROM_POST_REDUCER';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const startFetchComments = () => ({
@@ -83,6 +85,16 @@ export const addCommentSuccess = (comment) => ({
 export const addCommentFailure = error => ({
   type: ADD_COMMENT_FAILURE,
   payload: error
+});
+
+export const addCommentToPostReducer = (postId) => ({
+  type: ADD_COMMENT_TO_POST_REDUCER,
+  payload: postId
+});
+
+export const removeCommentFromPostReducer = (postId) => ({
+  type: REMOVE_COMMENT_FROM_POST_REDUCER,
+  payload: postId
 });
 
 const headers = {
@@ -159,7 +171,7 @@ export function editComment(comment) {
   }
 }
 
-export function deleteComment(commentId) {
+export function deleteComment(commentId, parentId) {
   return dispatch => {
     dispatch(startDeleteComment());
     return fetch(`${BASE_URL}/comments/${commentId}`, { 
@@ -170,13 +182,16 @@ export function deleteComment(commentId) {
       method: "DELETE"
     })
     .then(handleErrors)
-      .then(response => {
-        response.json()
-      })
-      .then(data => {
-        dispatch(deleteCommentSuccess(commentId));
-        })
-      .catch(error => dispatch(deleteCommentFailure(error)))
+    .then(response => {
+      response.json()
+    })
+    .then(data => {
+      dispatch(deleteCommentSuccess(commentId));
+    })
+    .then(data => {
+      dispatch(removeCommentFromPostReducer(parentId))
+    })
+    .catch(error => dispatch(deleteCommentFailure(error)))
   }
 }
 
@@ -204,6 +219,9 @@ export const addComment = (comment) => {
       })
       .then(data => {
         dispatch(addCommentSuccess(comment));
+      })
+      .then(data => {
+        dispatch(addCommentToPostReducer(comment.parentId))
       })
       .catch(error => dispatch(addCommentFailure(error)))
   }
