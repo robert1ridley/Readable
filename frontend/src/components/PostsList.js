@@ -13,11 +13,9 @@ import DateRangeIcon from 'material-ui-icons/DateRange';
 import InsertCommentIcon from 'material-ui-icons/InsertComment';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
-import Chip from 'material-ui/Chip';
 import AddPost from './AddPost';
 import VoteButtons from './VoteButtons';
 import { calculateCommentCount } from '../utils';
-import { updateVotes } from '../Actions/postsActions';
 
 const styles = theme => ({
   root: {
@@ -54,7 +52,7 @@ const PostsList = (props) => {
             {
               posts.map(post => 
                 !post.deleted &&
-                <div key={post.id} className={classes.listItem} key={post.id}>
+                <div key={post.id} className={classes.listItem}>
                   <Paper className={classes.innerList} elevation={4}>
                   <Link to={`/${post.category}/${post.id}`} key={post.id}>
                     <ListItem>
