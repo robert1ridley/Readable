@@ -70,9 +70,9 @@ export const startUpdateVotes = () => ({
   type: START_UPDATE_VOTES
 });
 
-export const updateVotesSuccess = vote => ({
+export const updateVotesSuccess = (vote, postId) => ({
   type: UPDATE_VOTES_SUCCESS,
-  payload: { vote }
+  payload: { vote, postId }
 });
 
 export const updateVotesFailure = error => ({
@@ -187,7 +187,7 @@ export function updateVotes(vote, postId) {
       response.json()
     })
     .then(data => {
-      dispatch(updateVotesSuccess(vote));
+      dispatch(updateVotesSuccess(vote, postId));
       return data
       }
     )

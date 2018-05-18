@@ -13,8 +13,11 @@ import DateRangeIcon from 'material-ui-icons/DateRange';
 import InsertCommentIcon from 'material-ui-icons/InsertComment';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import Chip from 'material-ui/Chip';
 import AddPost from './AddPost';
+import VoteButtons from './VoteButtons';
 import { calculateCommentCount } from '../utils';
+import { updateVotes } from '../Actions/postsActions';
 
 const styles = theme => ({
   root: {
@@ -32,11 +35,14 @@ const styles = theme => ({
   innerList: theme.mixins.gutters({
     paddingTop: 16,
     paddingBottom: 16,
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing.unit * 2
   }),
+  chip: {
+    margin: 10,
+  },
 });
 
-function PostsList(props) {
+const PostsList = (props) => {
   const { classes, posts, updatedCommentCounts } = props;
   return (
     <Grid container spacing={24} style={{flexGrow: 1}}>
@@ -48,48 +54,50 @@ function PostsList(props) {
             {
               posts.map(post => 
                 !post.deleted &&
-                <Link to={`/${post.category}/${post.id}`} key={post.id}>
-                  <div key={post.id} className={classes.listItem}>
-                    <Paper className={classes.innerList} elevation={4}>
-                      <ListItem>
-                        <Avatar>
-                          <FaceIcon />
-                        </Avatar>
-                        <ListItemText primary={post.title} secondary={post.body} />
-                      </ListItem>
-                      <BottomNavigation
-                        value='blue'
-                        showLabels
-                        style={{maxWidth: 400}}
-                      >
-                        <BottomNavigationAction 
-                          label={`${post.voteScore} likes`} 
-                          icon={post.voteScore < 0 ? <ThumbDown /> : <ThumbUp />} 
-                        />
-                        <BottomNavigationAction
-                          label={`${moment(new Date(post.timestamp)).fromNow()}`}
-                          icon={<DateRangeIcon />}
-                        />
-                        <BottomNavigationAction
-                          label={
-                            `${calculateCommentCount(post.id, post.commentCount, updatedCommentCounts)} comments`
-                          } 
-                          icon={<InsertCommentIcon />}
-                        />
-                        <BottomNavigationAction 
-                          label={post.author}
-                          icon={<FaceIcon />}
-                        />
-                      </BottomNavigation>
-                    </Paper>
-                  </div>
-                </Link>
+                <div key={post.id} className={classes.listItem} key={post.id}>
+                  <Paper className={classes.innerList} elevation={4}>
+                  <Link to={`/${post.category}/${post.id}`} key={post.id}>
+                    <ListItem>
+                      <Avatar>
+                        <FaceIcon />
+                      </Avatar>
+                      <ListItemText primary={post.title} secondary={post.body} />
+                    </ListItem>
+                    <BottomNavigation
+                      value='blue'
+                      showLabels
+                    >
+                      <BottomNavigationAction 
+                        label={`${post.voteScore} likes`} 
+                        icon={post.voteScore < 0 ? <ThumbDown /> : <ThumbUp />} 
+                      />
+                      <BottomNavigationAction
+                        label={`${moment(new Date(post.timestamp)).fromNow()}`}
+                        icon={<DateRangeIcon />}
+                      />
+                      <BottomNavigationAction
+                        label={
+                          `${calculateCommentCount(post.id, post.commentCount, updatedCommentCounts)} comments`
+                        } 
+                        icon={<InsertCommentIcon />}
+                      />
+                      <BottomNavigationAction 
+                        label={post.author}
+                        icon={<FaceIcon />}
+                      />
+                    </BottomNavigation>
+                    </Link>
+                    <VoteButtons
+                      postId={post.id}
+                    />
+                  </Paper>
+                </div>
               )
             }
           </List>
         </div>
-       </Grid>
-     </Grid>
+      </Grid>
+    </Grid>
   );
 }
 

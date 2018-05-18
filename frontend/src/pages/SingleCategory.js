@@ -30,7 +30,7 @@ class SingleCategory extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const pageId = nextProps.match.params.category;
-    if (nextProps.match.params.category !== this.props.match.params.category && !this.props.loading){
+    if ((this.props.posts !== nextProps.posts && !this.props.loading) || (nextProps.match.params.category !== this.props.match.params.category && !this.props.loading)){
       this.props.dispatch(fetchPostsByCategory(nextProps.match.params.category))
       .then(() => {
         const foundIndex = nextProps.categories.findIndex((el) => (el.name === pageId));

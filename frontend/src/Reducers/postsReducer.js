@@ -124,7 +124,7 @@ export default function postsReducer(state = initialState, action) {
           voteScore: state.singleItem.voteScore + voteCount
         },
         items: [...state.items.map((item) => ({...item,
-          voteScore: item.id === state.singleItem.id ? item.voteScore + voteCount : item.voteScore}))]
+          voteScore: item.id === action.payload.postId ? item.voteScore + voteCount : item.voteScore}))]
       }
     
     case UPDATE_VOTES_FAILURE:
