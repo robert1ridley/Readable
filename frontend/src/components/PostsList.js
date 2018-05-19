@@ -40,7 +40,7 @@ const styles = theme => ({
 });
 
 const PostsList = (props) => {
-  const { classes, posts, updatedCommentCounts } = props;
+  const { classes, posts } = props;
   return (
     <Grid container spacing={24} style={{flexGrow: 1}}>
       <Grid item md={3} xs={1} />
