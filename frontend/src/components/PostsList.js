@@ -15,7 +15,6 @@ import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import AddPost from './AddPost';
 import VoteButtons from './VoteButtons';
-import { calculateCommentCount } from '../utils';
 
 const styles = theme => ({
   root: {
@@ -75,7 +74,7 @@ const PostsList = (props) => {
                       />
                       <BottomNavigationAction
                         label={
-                          `${calculateCommentCount(post.id, post.commentCount, updatedCommentCounts)} comments`
+                          `${post.commentCount} comments`
                         } 
                         icon={<InsertCommentIcon />}
                       />
@@ -99,9 +98,5 @@ const PostsList = (props) => {
   );
 }
 
-const mapStateToProps = state => ({
-  updatedCommentCounts: state.postsReducer.updatedCommentCounts
-});
-
 const wrappedComponent = withStyles(styles)(PostsList);
-export default connect(mapStateToProps)(wrappedComponent);
+export default connect()(wrappedComponent);

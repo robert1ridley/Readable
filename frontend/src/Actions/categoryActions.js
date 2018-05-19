@@ -24,8 +24,8 @@ export const setCurrentCategory = categoryName => ({
 })
 
 const headers = {
-  Authorization: Math.random().toString(36).substr(-8)
-}
+  Authorization: "whatever-you-want"
+};
 
 export function fetchCategories() {
   return dispatch => {

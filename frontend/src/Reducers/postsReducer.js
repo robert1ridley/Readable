@@ -23,10 +23,6 @@ import {
   EDIT_POST_SUCCESS,
   EDIT_POST_FAILURE,
 } from '../Actions/postsActions';
-import {
-  ADD_COMMENT_TO_POST_REDUCER,
-  REMOVE_COMMENT_FROM_POST_REDUCER
-} from '../Actions/commentsActions';
 
 const initialState = {
   items: [],
@@ -199,44 +195,6 @@ export default function postsReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error
-      }
-
-    case ADD_COMMENT_TO_POST_REDUCER:
-      let itemExists = false;
-      const itemExistsArray = state.updatedCommentCounts.filter(item => {
-        itemExists = item.postId === action.payload && true;
-      });
-      const itemToInsert = { postId: action.payload, countIncrease: 1 }
-      if (itemExists) {
-        return {
-          ...state,
-          updatedCommentCounts: [...state.updatedCommentCounts.map((item) => ({...item,          
-            countIncrease: item.postId === action.payload ? item.countIncrease + 1 : item.countIncrease }))]
-        }
-      } else {
-        return {
-          ...state,
-          updatedCommentCounts: [...state.updatedCommentCounts, itemToInsert]
-        }
-      }
-
-      case REMOVE_COMMENT_FROM_POST_REDUCER:
-      let existingItem = false;
-      const existingItemArray = state.updatedCommentCounts.filter(item => {
-        existingItem = item.postId === action.payload && true;
-      });
-      const itemToAdd = { postId: action.payload, countIncrease: -1 }
-      if (existingItem) {
-        return {
-          ...state,
-          updatedCommentCounts: [...state.updatedCommentCounts.map((item) => ({...item,          
-            countIncrease: item.postId === action.payload ? item.countIncrease - 1 : item.countIncrease }))]
-        }
-      } else {
-        return {
-          ...state,
-          updatedCommentCounts: [...state.updatedCommentCounts, itemToAdd]
-        }
       }
 
     default:

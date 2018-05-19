@@ -123,7 +123,7 @@ export const editPostFailure = error => ({
 });
 
 const headers = {
-  Authorization: Math.random().toString(36).substr(-8)
+  Authorization: "whatever-you-want"
 };
 
 export function fetchPosts() {
