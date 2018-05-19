@@ -26,8 +26,8 @@ import {
 
 const initialState = {
   items: [],
-  updatedCommentCounts: [],
   singleItem: {},
+  singleItemNotFound: false,
   loading: false,
   error: null
 };
@@ -38,14 +38,16 @@ export default function postsReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
+        singleItemNotFound: false
       };
 
     case FETCH_SINGLE_POST_SUCCESS:
       return {
         ...state,
         loading: false,
-        singleItem: action.payload.post
+        singleItem: action.payload.post,
+        singleItemNotFound: Object.keys(action.payload.post).length === 0 ? true : false
       };
 
     case FETCH_SINGLE_POST_FAILURE:
@@ -60,7 +62,7 @@ export default function postsReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
 
     case FETCH_POSTS_SUCCESS:

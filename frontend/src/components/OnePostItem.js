@@ -62,12 +62,12 @@ class OnePostItem extends React.Component {
   }
 
   render() {
-    const { post, loading, postId } = this.props;
+    const { post, loading, postId, singleItemNotFound } = this.props;
     const { open } = this.state;
     return (
       <div>
         {
-          post.deleted && !post.loading &&
+          ((post.deleted && !post.loading) || (singleItemNotFound && !post.loading )) &&
           <Redirect to="/"/>
         }
         {
@@ -142,7 +142,7 @@ class OnePostItem extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  
+  singleItemNotFound: state.postsReducer.singleItemNotFound,
   post: state.postsReducer.singleItem,
   loading: state.postsReducer.loading,
   error: state.postsReducer.error
