@@ -53,7 +53,7 @@ const PostsList = (props) => {
                 !post.deleted &&
                 <div key={post.id} className={classes.listItem}>
                   <Paper className={classes.innerList} elevation={4}>
-                  <Link to={`/${post.category}/${post.id}`} key={post.id}>
+                  <Link to={`/${post.category}/${post.id}`}>
                     <ListItem>
                       <Avatar>
                         <FaceIcon />

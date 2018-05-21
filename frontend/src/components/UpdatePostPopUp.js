@@ -31,7 +31,7 @@ class UpdatePostPopUp extends React.Component {
   state = {
     title: '',
     body: '',
-    id: ''
+    id: '',
   }
 
   handleChange = name => event => {
@@ -53,11 +53,12 @@ class UpdatePostPopUp extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     this.props.dispatch(editPost(this.state))
+    .then(this.props.closePopUp)
     .then(this.props.history.push("/"))
   }
 
   render() {
-    const { title, body } = this.state;
+    const { body, title } = this.state;
     return (
       <form>
         <Dialog
@@ -78,7 +79,7 @@ class UpdatePostPopUp extends React.Component {
               label="Post Title"
               type="text"
               onChange={this.handleChange('title')}
-              value={title}
+              value={title ? title : ""}
               fullWidth
               required
             />
@@ -92,7 +93,7 @@ class UpdatePostPopUp extends React.Component {
               label="Post Body"
               type="text"
               onChange={this.handleChange('body')}
-              value={body}
+              value={body ? body : ""}
               fullWidth
               required
             />

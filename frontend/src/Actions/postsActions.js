@@ -251,9 +251,6 @@ export const addPost = (post) => {
 }
 
 export function editPost(post) {
-  const payload = {
-    option: post
-  }
   return dispatch => {
     dispatch(startEditPost());
     return fetch(`${BASE_URL}/posts/${post.id}`, { 
@@ -269,7 +266,7 @@ export function editPost(post) {
       response.json()
     })
     .then(data => {
-      dispatch(editPostSuccess(payload));
+      dispatch(editPostSuccess(post));
       return data
       }
     )

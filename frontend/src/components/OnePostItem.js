@@ -71,7 +71,7 @@ class OnePostItem extends React.Component {
           <Redirect to="/"/>
         }
         {
-          (post !== {} || postId === '' || loading !== true) &&
+          (loading !== true) &&
           <div>
             <Grid container spacing={24} style={{flexGrow: 1}}>
               <Grid item md={3} xs={1} />

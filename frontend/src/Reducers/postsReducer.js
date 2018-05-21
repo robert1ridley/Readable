@@ -63,6 +63,7 @@ export default function postsReducer(state = initialState, action) {
         ...state,
         loading: true,
         error: null,
+        singleItemNotFound: false
       };
 
     case FETCH_POSTS_SUCCESS:
@@ -188,8 +189,7 @@ export default function postsReducer(state = initialState, action) {
         loading: false,
         error: null,
         singleItem: {},
-        items: [...state.items.map((item) => ({...item,          
-          item: item.id === action.payload.post.id ? action.payload.post : item}))]
+        items: state.items.map(item => item.id === action.payload.post.id ? Object.assign(item, { title: action.payload.post.title, body: action.payload.post.body }) : item )
       }
 
     case EDIT_POST_FAILURE:
