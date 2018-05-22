@@ -11,8 +11,8 @@ class SinglePost extends React.Component {
   }
   
   render(){
-    const { match, error, deleted } = this.props;
-    if(error || deleted){
+    const { match, error, deleted, singleItemNotFound } = this.props;
+    if(error || deleted || singleItemNotFound){
       return (<NotFound />)
     }
     else {
@@ -28,7 +28,8 @@ class SinglePost extends React.Component {
 
 const mapStateToProps = state => ({
   error: state.postsReducer.error,
-  deleted: state.postsReducer.singleItem.deleted
+  deleted: state.postsReducer.singleItem.deleted,
+  singleItemNotFound: state.postsReducer.singleItemNotFound
 });
 
 export default connect(mapStateToProps)(SinglePost);
